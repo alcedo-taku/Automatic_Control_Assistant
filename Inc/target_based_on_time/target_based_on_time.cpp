@@ -4,30 +4,45 @@ TargetBasedOnTime::TargetBasedOnTime(){
 
 }
 
-void TargetBasedOnTime::set(float targetPositionDistance, float maxAcceleration, float maxVelocity){
-	if (targetPositionDistance != this->targetPositionDistance || maxAcceleration != this->maxAcceleration || maxVelocity != this->maxVelocity){
+
+
+void TargetBasedOnTime::set(float targetPosition, float initialPosition, float maxAcceleration, float maxVelocity){
+	if (targetPosition != this->targetPosition || maxAcceleration != this->maxAcceleration || maxVelocity != this->maxVelocity){
 		this->maxAcceleration = maxAcceleration;
 		this->maxVelocity = maxVelocity;
-		this->targetPositionDistance = targetPositionDistance;
-		borderDistance = powf(maxVelocity, 2)*M_PI/(2*maxAcceleration);
 
-		if (targetPositionDistance < borderDistance){
+		this->targetPosition = targetPosition;
+		this->initialPosition = initialPosition;
+		targetPositionDistance = abs(targetPosition-initialPosition);
+
+		border = powf(maxVelocity, 2)*M_PI/(2*maxAcceleration);
+
+		if (targetPositionDistance < border){
 			maxVelocityThisTime = sqrtf(2*targetPositionDistance*maxAcceleration/M_PI);
 		}else {
 			maxVelocityThisTime = this->maxVelocity;
 		}
+
 		periodOfAcceleration = periodOfDeceleration = maxVelocity*M_PI/(4*maxAcceleration);
 		periodOfConstantVelocity = 0;
-		if (borderDistance < targetPositionDistance) {
+
+		if (border < targetPositionDistance) {
 			periodOfConstantVelocity = targetPositionDistance/maxVelocityThisTime;
 		}
+
 		startingTime = HAL_GetTick();
 	}
 }
 
-void TargetBasedOnTime::setTarget(float targetPositionDistance){
-	set(targetPositionDistance, maxAcceleration, maxVelocity);
+void TargetBasedOnTime::set(float targetPositionDistance, float maxAcceleration, float maxVelocity){
+	set(targetPositionDistance, 0, maxAcceleration, maxVelocity);
 }
+
+void TargetBasedOnTime::setTarget(float targetPosition){
+	set(targetPosition, maxAcceleration, maxVelocity);
+}
+
+
 
 void TargetBasedOnTime::start(){
 	startingTime = HAL_GetTick();
@@ -47,7 +62,7 @@ void TargetBasedOnTime::update(uint16_t time){
 		position = getPositionBasic(time-periodOfConstantVelocity);
 	}else {
 		velocity = 0;
-		position = targetPositionDistance;
+		position = targetPosition;
 	}
 }
 
@@ -68,10 +83,19 @@ float TargetBasedOnTime::getPositionBasic(uint16_t time){
 
 
 float TargetBasedOnTime::getVelocity(){
-	return velocity;
+	if (initialPosition <= targetPosition){
+		return velocity;
+	}else {
+		return -velocity;
+	}
 }
 
 float TargetBasedOnTime::getPosition(){
+	if (initialPosition <= targetPosition) {
+		return position + initialPosition;
+	}else {
+		return -position + initialPosition;
+	}
 	return position;
 }
 

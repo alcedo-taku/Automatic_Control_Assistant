@@ -7,6 +7,7 @@
 class TargetBasedOnTime{
 public:
 	TargetBasedOnTime();
+	void set(float targetPosition, float initialPosition, float maxAcceleration, float maxVelocity);
 	void set(float targetPositionDistance, float maxAcceleration, float maxVelocity);
 	void setTarget(float targetPosition);
 	void start();
@@ -17,10 +18,12 @@ public:
 	float getTimeRequired();
 private:
 	float targetPositionDistance;
+	float targetPosition;
+	float initialPosition;
 	float maxAcceleration;
 	float maxVelocity;
 	float maxVelocityThisTime;
-	float borderDistance;
+	float border;
 	uint16_t startingTime;
 
 	float position;
