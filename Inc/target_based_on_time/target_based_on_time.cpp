@@ -15,6 +15,7 @@ void TargetBasedOnTime::set(float targetPosition, float initialPosition, float m
 		this->initialPosition = initialPosition;
 		targetPositionDistance = abs(targetPosition-initialPosition);
 
+		//加速しきれる最小距離の計算
 		borderDistance = powf(maxVelocity, 2)*M_PI/(2*maxAcceleration);
 
 		//最高速度の計算
@@ -24,6 +25,7 @@ void TargetBasedOnTime::set(float targetPosition, float initialPosition, float m
 			maxVelocityThisTime = this->maxVelocity;
 		}
 
+		//加速時間、等速時間、減速時間の計算
 		periodOfAcceleration = periodOfDeceleration = maxVelocity*M_PI/(2*maxAcceleration);
 		periodOfConstantVelocity = 0;
 		if (borderDistance < targetPositionDistance) {
@@ -52,14 +54,18 @@ void TargetBasedOnTime::update(uint16_t time){
 	}else if (periodOfAcceleration + periodOfConstantVelocity < time  &&  time <= periodOfAcceleration + periodOfConstantVelocity + periodOfDeceleration) { //period of deceleration
 		velocity = getVelocityBasic(time-periodOfConstantVelocity);
 		position = getPositionBasic(time-periodOfConstantVelocity) + maxVelocityThisTime*periodOfConstantVelocity;
-	}else {
+	}else { //目標値に到達後
 		velocity = 0;
 		position = targetPosition;
 	}
+
+	//初期値と目標値の大小関係によって、速度と位置の正負を変える
     if (initialPosition > targetPosition){
         velocity = -velocity;
         position = -position;
     }
+    //初期値を足す
+    position += initialPosition;
 }
 
 
