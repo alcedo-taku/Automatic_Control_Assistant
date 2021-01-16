@@ -29,8 +29,6 @@ void TargetBasedOnTime::set(float targetPosition, float initialPosition, float m
 		if (border < targetPositionDistance) {
 			periodOfConstantVelocity = targetPositionDistance/maxVelocityThisTime;
 		}
-
-		startingTime = HAL_GetTick();
 	}
 }
 
@@ -40,12 +38,6 @@ void TargetBasedOnTime::set(float targetPositionDistance, float maxAcceleration,
 
 void TargetBasedOnTime::setTarget(float targetPosition){
 	set(targetPosition, maxAcceleration, maxVelocity);
-}
-
-
-
-void TargetBasedOnTime::start(){
-	startingTime = HAL_GetTick();
 }
 
 
@@ -65,11 +57,6 @@ void TargetBasedOnTime::update(uint16_t time){
 		position = targetPosition;
 	}
 }
-
-void TargetBasedOnTime::update(){
-	update((uint16_t)HAL_GetTick()-startingTime);
-}
-
 
 
 float TargetBasedOnTime::getVelocityBasic(uint16_t time){

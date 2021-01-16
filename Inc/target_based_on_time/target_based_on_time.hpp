@@ -10,9 +10,7 @@ public:
 	void set(float targetPosition, float initialPosition, float maxAcceleration, float maxVelocity);
 	void set(float targetPositionDistance, float maxAcceleration, float maxVelocity);
 	void setTarget(float targetPosition);
-	void start();
 	void update(uint16_t time);
-	void update();
 	float getPosition();
 	float getVelocity();
 	float getTimeRequired();
@@ -24,7 +22,6 @@ private:
 	float maxVelocity;
 	float maxVelocityThisTime;
 	float border;
-	uint16_t startingTime;
 
 	float position;
 	float velocity;

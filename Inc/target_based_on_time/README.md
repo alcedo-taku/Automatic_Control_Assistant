@@ -12,9 +12,7 @@
         - [TargetBasedOnTime::set(float, float, float, float)](#targetbasedontimesetfloat-float-float-float)
         - [TargetBasedOnTime::set(float, float, float)](#targetbasedontimesetfloat-float-float)
         - [TargetBasedOnTime::setTarget(float)](#targetbasedontimesettargetfloat)
-        - [TargetBasedOnTime::start()](#targetbasedontimestart)
         - [TargetBasedOnTime::update(uint16_t)](#targetbasedontimeupdateuint16_t)
-        - [TargetBasedOnTime::update()](#targetbasedontimeupdate)
         - [TargetBasedOnTime::getVelocity()](#targetbasedontimegetvelocity)
         - [TargetBasedOnTime::getPosition()](#targetbasedontimegetposition)
         - [TargetBasedOnTime::getTimeRequired()](#targetbasedontimegettimerequired)
@@ -73,16 +71,6 @@
 > arm.setTarget(100);
 > ```
 
-##### TargetBasedOnTime::start()
-> ```c++
-> void start();
-> ```
-> 処理を始めた時間を保持している変数`startingTime`を更新します。  
-> ```c++
-> // 例
-> arm.start();
-> ```
-
 ##### TargetBasedOnTime::update(uint16_t)
 > ```c++
 > void update(uint16_t time);
@@ -91,16 +79,6 @@
 > ```c++
 > // 例
 > arm.update(100);
-> ```
-
-##### TargetBasedOnTime::update()
-> ```c++
-> void update();
-> ```
-> `TargetBasedOnTime::start()` を実行したときの時間を元に、 `velocity` と `position` を更新します。  
-> ```c++
-> // 例
-> arm.update();
 > ```
 
 ##### TargetBasedOnTime::getVelocity()
