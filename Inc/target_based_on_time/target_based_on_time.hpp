@@ -13,7 +13,7 @@ public:
 	void update(uint16_t time);
 	float getPosition();
 	float getVelocity();
-	float getTimeRequired();
+	float getTimeRequired(); //目標値に達するまでの時間を返す
 private:
 	float targetPositionDistance;
 	float targetPosition;
@@ -21,16 +21,16 @@ private:
 	float maxAcceleration;
 	float maxVelocity;
 	float maxVelocityThisTime;
-	float borderDistance;
+	float borderDistance; //加速しきれる最小距離
 
 	float position;
 	float velocity;
 	float getPositionBasic(uint16_t time);
 	float getVelocityBasic(uint16_t time);
 
-	float periodOfAcceleration;
-	float periodOfConstantVelocity;
-	float periodOfDeceleration;
+	float periodOfAcceleration; //加速時間
+	float periodOfConstantVelocity; //等速時間
+	float periodOfDeceleration; //減速時間
 };
 
 #endif //AUTOMATIC_CONTROL_ASSISTANT_TARGET_BASED_ON_TIME
