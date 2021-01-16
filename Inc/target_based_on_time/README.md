@@ -1,1 +1,136 @@
 # TargetBasedOnTime
+
+自由度1の自動制御（三角関数）  
+目標値、最大加速度、最大速度を入れると、 その時間にいるべき位置と速度を返してくれる。  
+
+## 目次
+- [TargetBasedOnTime](#targetbasedontime)
+  - [目次](#目次)
+  - [コンストラクタ](#コンストラクタ)
+        - [TargetBasedOnTime::TargetBasedOnTime()](#targetbasedontimetargetbasedontime)
+  - [関数](#関数)
+        - [TargetBasedOnTime::set(float, float, float, float)](#targetbasedontimesetfloat-float-float-float)
+        - [TargetBasedOnTime::set(float, float, float)](#targetbasedontimesetfloat-float-float)
+        - [TargetBasedOnTime::setTarget(float)](#targetbasedontimesettargetfloat)
+        - [TargetBasedOnTime::start()](#targetbasedontimestart)
+        - [TargetBasedOnTime::update(uint16_t)](#targetbasedontimeupdateuint16_t)
+        - [TargetBasedOnTime::update()](#targetbasedontimeupdate)
+        - [TargetBasedOnTime::getVelocity()](#targetbasedontimegetvelocity)
+        - [TargetBasedOnTime::getPosition()](#targetbasedontimegetposition)
+        - [TargetBasedOnTime::getTimeRequired()](#targetbasedontimegettimerequired)
+
+## コンストラクタ
+##### TargetBasedOnTime::TargetBasedOnTime()
+> ```c++
+> TargetBasedOnTime();
+> ```
+> 今のところ何も処理していません。  
+> ```c++
+> // 例
+> TargetBasedOnTime arm();
+> ```
+
+## 関数
+##### TargetBasedOnTime::set(float, float, float, float)
+> ```c++
+> void set(
+>     float targetPosition,
+>     float initialPosition,
+>     float maxAcceleration,
+>     float maxVelocity
+> );
+> ```
+> 目標位置、現在位置、最大加速度、最大速度を設定します。  
+> ```c++
+> // 例
+> arm.set(150, 50, 25, 50);
+> ```
+
+##### TargetBasedOnTime::set(float, float, float)
+> ```c++
+> void set(
+>     float targetPositionDistance,
+>     float maxAcceleration,
+>     float maxVelocity
+> );
+> ```
+> 現在位置を0とし、 `TargetBasedOnTime::set(float, float, float, float)` を実行します。  
+> ```c++
+> // 例
+> arm.set(100, 25, 50);
+> ```
+
+##### TargetBasedOnTime::setTarget(float)
+> ```c++
+> void setTarget(
+>     float targetPosition
+> );
+> ```
+> 現在位置を0とし、目標位置を設定します。  
+> 最大加速度、最大速度はそのままです。
+> ```c++
+> // 例
+> arm.setTarget(100);
+> ```
+
+##### TargetBasedOnTime::start()
+> ```c++
+> void start();
+> ```
+> 処理を始めた時間を保持している変数`startingTime`を更新します。  
+> ```c++
+> // 例
+> arm.start();
+> ```
+
+##### TargetBasedOnTime::update(uint16_t)
+> ```c++
+> void update(uint16_t time);
+> ```
+> 渡された時間を元に、 `velocity` と `position` を更新します。  
+> ```c++
+> // 例
+> arm.update(100);
+> ```
+
+##### TargetBasedOnTime::update()
+> ```c++
+> void update();
+> ```
+> `TargetBasedOnTime::start()` を実行したときの時間を元に、 `velocity` と `position` を更新します。  
+> ```c++
+> // 例
+> arm.update();
+> ```
+
+##### TargetBasedOnTime::getVelocity()
+> ```c++
+> float getVelocity();
+> ```
+> `velocity` を返します。
+> ```c++
+> // 例
+> arm.getVelocity();
+> ```
+
+##### TargetBasedOnTime::getPosition()
+> ```c++
+> float getPosition();
+> ```
+> `position` を返します。  
+> ```c++
+> // 例
+> arm.getPosition();
+> ```
+
+##### TargetBasedOnTime::getTimeRequired()
+> ```c++
+> float getTimeRequired();
+> ```
+> 目標値に達するまでの時間を返します。  
+> ```c++
+> // 例
+> arm.getTimeRequired();
+> ```
+
+[<< 戻る](../../README.md)
