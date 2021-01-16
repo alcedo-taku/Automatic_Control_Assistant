@@ -17,17 +17,17 @@ void TargetBasedOnTime::set(float targetPosition, float initialPosition, float m
 
 		borderDistance = powf(maxVelocity, 2)*M_PI/(2*maxAcceleration);
 
+		//最高速度の計算
 		if (targetPositionDistance < borderDistance){
 			maxVelocityThisTime = sqrtf(2*targetPositionDistance*maxAcceleration/M_PI);
 		}else {
 			maxVelocityThisTime = this->maxVelocity;
 		}
 
-		periodOfAcceleration = periodOfDeceleration = maxVelocity*M_PI/(4*maxAcceleration);
+		periodOfAcceleration = periodOfDeceleration = maxVelocity*M_PI/(2*maxAcceleration);
 		periodOfConstantVelocity = 0;
-
 		if (borderDistance < targetPositionDistance) {
-			periodOfConstantVelocity = targetPositionDistance/maxVelocityThisTime;
+			periodOfConstantVelocity = (targetPositionDistance-borderDistance)/maxVelocityThisTime;
 		}
 	}
 }
@@ -51,38 +51,32 @@ void TargetBasedOnTime::update(uint16_t time){
 		position = getPositionBasic(periodOfAcceleration) + maxVelocity*(time-periodOfAcceleration);
 	}else if (periodOfAcceleration + periodOfConstantVelocity < time  &&  time <= periodOfAcceleration + periodOfConstantVelocity + periodOfDeceleration) { //period of deceleration
 		velocity = getVelocityBasic(time-periodOfConstantVelocity);
-		position = getPositionBasic(time-periodOfConstantVelocity);
+		position = getPositionBasic(time-periodOfConstantVelocity) + maxVelocityThisTime*periodOfConstantVelocity;
 	}else {
 		velocity = 0;
 		position = targetPosition;
 	}
+    if (initialPosition > targetPosition){
+        velocity = -velocity;
+        position = -position;
+    }
 }
 
 
 float TargetBasedOnTime::getVelocityBasic(uint16_t time){
-	return -maxVelocityThisTime /2 *cosf(2*maxAcceleration/maxVelocityThisTime*time);
+	return -maxVelocityThisTime /2 *cosf(2*maxAcceleration/maxVelocityThisTime*time) + maxVelocityThisTime/2;
 }
 
 float TargetBasedOnTime::getPositionBasic(uint16_t time){
-	return -powf(maxVelocityThisTime, 2) /(4*maxAcceleration) *sinf(2*maxAcceleration /maxVelocityThisTime *time);
+	return -powf(maxVelocityThisTime, 2) /(4*maxAcceleration) *sinf(2*maxAcceleration /maxVelocityThisTime *time)+ maxVelocityThisTime/2*time;
 }
-
 
 
 float TargetBasedOnTime::getVelocity(){
-	if (initialPosition <= targetPosition){
-		return velocity;
-	}else {
-		return -velocity;
-	}
+	return velocity;
 }
 
 float TargetBasedOnTime::getPosition(){
-	if (initialPosition <= targetPosition) {
-		return position + initialPosition;
-	}else {
-		return -position + initialPosition;
-	}
 	return position;
 }
 
