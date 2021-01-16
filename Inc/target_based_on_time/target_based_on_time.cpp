@@ -15,9 +15,9 @@ void TargetBasedOnTime::set(float targetPosition, float initialPosition, float m
 		this->initialPosition = initialPosition;
 		targetPositionDistance = abs(targetPosition-initialPosition);
 
-		border = powf(maxVelocity, 2)*M_PI/(2*maxAcceleration);
+		borderDistance = powf(maxVelocity, 2)*M_PI/(2*maxAcceleration);
 
-		if (targetPositionDistance < border){
+		if (targetPositionDistance < borderDistance){
 			maxVelocityThisTime = sqrtf(2*targetPositionDistance*maxAcceleration/M_PI);
 		}else {
 			maxVelocityThisTime = this->maxVelocity;
@@ -26,7 +26,7 @@ void TargetBasedOnTime::set(float targetPosition, float initialPosition, float m
 		periodOfAcceleration = periodOfDeceleration = maxVelocity*M_PI/(4*maxAcceleration);
 		periodOfConstantVelocity = 0;
 
-		if (border < targetPositionDistance) {
+		if (borderDistance < targetPositionDistance) {
 			periodOfConstantVelocity = targetPositionDistance/maxVelocityThisTime;
 		}
 	}

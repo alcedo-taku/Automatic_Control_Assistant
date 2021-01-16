@@ -21,7 +21,7 @@ private:
 	float maxAcceleration;
 	float maxVelocity;
 	float maxVelocityThisTime;
-	float border;
+	float borderDistance;
 
 	float position;
 	float velocity;
