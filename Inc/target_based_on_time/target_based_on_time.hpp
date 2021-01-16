@@ -2,7 +2,7 @@
 #define AUTOMATIC_CONTROL_ASSISTANT_TARGET_BASED_ON_TIME
 
 #include "math.h"
-#include "main.h"
+#include <cstdint>
 
 class TargetBasedOnTime{
 public:
