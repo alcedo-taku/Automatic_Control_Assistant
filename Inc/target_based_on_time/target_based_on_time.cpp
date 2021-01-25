@@ -26,7 +26,7 @@ void TargetBasedOnTime::set(float targetPosition, float initialPosition, float m
 		}
 
 		//加速時間、等速時間、減速時間の計算
-		periodOfAcceleration = periodOfDeceleration = maxVelocity*M_PI/(2*maxAcceleration);
+		periodOfAcceleration = periodOfDeceleration = maxVelocityThisTime*M_PI/(2*maxAcceleration);
 		periodOfConstantVelocity = 0;
 		if (borderDistance < targetPositionDistance) {
 			periodOfConstantVelocity = (targetPositionDistance-borderDistance)/maxVelocityThisTime;
