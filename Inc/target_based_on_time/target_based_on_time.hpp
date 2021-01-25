@@ -1,7 +1,7 @@
 #ifndef AUTOMATIC_CONTROL_ASSISTANT_TARGET_BASED_ON_TIME
 #define AUTOMATIC_CONTROL_ASSISTANT_TARGET_BASED_ON_TIME
 
-#include "math.h"
+#include <cmath>
 #include <cstdint>
 
 class TargetBasedOnTime{
