@@ -13,7 +13,7 @@ void TargetBasedOnTime::set(float targetPosition, float initialPosition, float m
 
 		this->targetPosition = targetPosition;
 		this->initialPosition = initialPosition;
-		targetPositionDistance = abs(targetPosition-initialPosition);
+		targetPositionDistance = std::abs(targetPosition-initialPosition);
 
 		//加速しきれる最小距離の計算
 		borderDistance = powf(maxVelocity, 2)*M_PI/(2*maxAcceleration);
