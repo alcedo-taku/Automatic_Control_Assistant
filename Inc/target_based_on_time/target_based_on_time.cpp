@@ -48,10 +48,10 @@ void TargetBasedOnTime::update(uint16_t time){
 	if (0 <= time  &&  time < periodOfAcceleration) { //period of acceleration
 		velocity = getVelocityBasic(time);
 		position = getPositionBasic(time);
-	}else if (periodOfAcceleration <= time  &&  time <= periodOfAcceleration + periodOfConstantVelocity) { //period of constant velocity
+	}else if (time <= periodOfAcceleration + periodOfConstantVelocity) { //period of constant velocity
 		velocity = maxVelocityThisTime;
 		position = getPositionBasic(periodOfAcceleration) + maxVelocityThisTime*(time-periodOfAcceleration);
-	}else if (periodOfAcceleration + periodOfConstantVelocity < time  &&  time <= periodOfAcceleration + periodOfConstantVelocity + periodOfDeceleration) { //period of deceleration
+	}else if (time <= periodOfAcceleration + periodOfConstantVelocity + periodOfDeceleration) { //period of deceleration
 		velocity = getVelocityBasic(time-periodOfConstantVelocity);
 		position = getPositionBasic(time-periodOfConstantVelocity) + maxVelocityThisTime*periodOfConstantVelocity;
 	}else { //目標値に到達後
