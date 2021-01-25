@@ -25,8 +25,8 @@ private:
 
 	float position;
 	float velocity;
-	float getPositionBasic(uint16_t time);
-	float getVelocityBasic(uint16_t time);
+	float getPositionBasic(float time);
+	float getVelocityBasic(float time);
 
 	float periodOfAcceleration; //加速時間
 	float periodOfConstantVelocity; //等速時間

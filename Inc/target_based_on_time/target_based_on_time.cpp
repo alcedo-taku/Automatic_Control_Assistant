@@ -50,7 +50,7 @@ void TargetBasedOnTime::update(uint16_t time){
 		position = getPositionBasic(time);
 	}else if (periodOfAcceleration <= time  &&  time <= periodOfAcceleration + periodOfConstantVelocity) { //period of constant velocity
 		velocity = maxVelocityThisTime;
-		position = getPositionBasic(periodOfAcceleration) + maxVelocity*(time-periodOfAcceleration);
+		position = getPositionBasic(periodOfAcceleration) + maxVelocityThisTime*(time-periodOfAcceleration);
 	}else if (periodOfAcceleration + periodOfConstantVelocity < time  &&  time <= periodOfAcceleration + periodOfConstantVelocity + periodOfDeceleration) { //period of deceleration
 		velocity = getVelocityBasic(time-periodOfConstantVelocity);
 		position = getPositionBasic(time-periodOfConstantVelocity) + maxVelocityThisTime*periodOfConstantVelocity;
@@ -69,11 +69,11 @@ void TargetBasedOnTime::update(uint16_t time){
 }
 
 
-float TargetBasedOnTime::getVelocityBasic(uint16_t time){
+float TargetBasedOnTime::getVelocityBasic(float time){
 	return -maxVelocityThisTime /2 *cosf(2*maxAcceleration/maxVelocityThisTime*time) + maxVelocityThisTime/2;
 }
 
-float TargetBasedOnTime::getPositionBasic(uint16_t time){
+float TargetBasedOnTime::getPositionBasic(float time){
 	return -powf(maxVelocityThisTime, 2) /(4*maxAcceleration) *sinf(2*maxAcceleration /maxVelocityThisTime *time)+ maxVelocityThisTime/2*time;
 }
 
