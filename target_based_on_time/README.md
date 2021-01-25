@@ -111,4 +111,4 @@
 > arm.getTimeRequired();
 > ```
 
-[<< 戻る](../../README.md)
+[<< 戻る](../README.md)
