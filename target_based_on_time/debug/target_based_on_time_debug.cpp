@@ -1,3 +1,5 @@
+// GNUplot を用いたデバッグ用のプログラム
+
 #include <cstdio>
 #include <stdint.h>
 #include <windows.h>
