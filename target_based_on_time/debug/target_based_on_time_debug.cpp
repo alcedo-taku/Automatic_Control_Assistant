@@ -1,3 +1,7 @@
+#ifdef ENABLE_TEST_CODE
+
+// GNUplot を用いたデバッグ用のプログラム
+
 #include <cstdio>
 #include <stdint.h>
 #include <windows.h>
@@ -74,3 +78,5 @@ int main(void){
 
     return 0;
 }
+
+#endif
