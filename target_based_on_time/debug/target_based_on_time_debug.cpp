@@ -29,7 +29,7 @@ int main(void){
     //データ作成//
 
     TargetBasedOnTime test;
-    test.set(100.0f, 0.0f,0.2f,3.5f);
+    test.set(150.0f, 0.0f,0.2f,3.5f, 1,0);
 
 //    dot a[NX];
 //    float dx = test.getTimeRequired()/(float)NX;
@@ -41,7 +41,7 @@ int main(void){
 //        printf("%f\n",dx*i);
 //    }
 
-    const int numberOfPoints = (int) test.getTimeRequired();
+    const int numberOfPoints = (int) test.getTimeRequired() + 5;
     dot a[numberOfPoints];
     for(int i=0; i<numberOfPoints; i++){
         a[i].time = i;
@@ -58,8 +58,7 @@ int main(void){
     // fprintf(gp, "plot '-' with lines  linetype 1  title \"a(time)\"\n"); //ラインタイプ、タイトル指定
 
     fprintf(gp, "plot '-' with points linetype 1  title \"position(time)\", \
-                      '-' with lines linetype 2  title \"velocity(time)\"\n"); //データ送信準備
-
+                      '-' with points linetype 2  title \"velocity(time)\"\n"); //データ送信準備
     for(int i=0; i<numberOfPoints; i++){
         fprintf(gp, "%f\t%f\n", a[i].time, a[i].position); // データの書き込み 送信
     }
