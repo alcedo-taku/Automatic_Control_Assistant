@@ -29,7 +29,7 @@ int main(void){
     //データ作成//
     float initialPosition = 0.0f;
     TargetBasedOnTime test;
-    test.set(100.0f, initialPosition,0.2f,10.0f, 50.0f, 10.0f);
+    test.set(500.0f, initialPosition,0.2f,10.0f, 5.0f, 1.0f);
 
 //    dot a[NX];
 //    float dx = test.getTimeRequired()/(float)NX;

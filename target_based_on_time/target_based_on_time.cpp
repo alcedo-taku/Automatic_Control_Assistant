@@ -67,7 +67,7 @@ void TargetBasedOnTime::update(uint16_t time){
 		position = getPositionBasic(time-(periodOfConstantVelocity+periodOfAcceleration)+periodOfDeceleration, finalVelocity) + maxVelocityThisTime*periodOfConstantVelocity + getPositionBasic(periodOfAcceleration, firstVelocity) - getPositionBasic(periodOfDeceleration, finalVelocity);
 	}else { //目標値に到達後
 		velocity = finalVelocity;
-		position = targetPosition;
+		position = targetPosition + (time - (periodOfAcceleration + periodOfConstantVelocity + periodOfDeceleration)) * finalVelocity;
 	}
 
 	//初期値と目標値の大小関係によって、速度と位置の正負を変える
