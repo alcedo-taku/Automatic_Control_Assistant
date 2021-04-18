@@ -97,5 +97,5 @@ float TargetBasedOnTime::getPosition(){
 }
 
 float TargetBasedOnTime::getTimeRequired(){
-	return periodOfAcceleration + periodOfConstantVelocity + periodOfDeceleration+10;
+	return periodOfAcceleration + periodOfConstantVelocity + periodOfDeceleration;
 }
