@@ -67,8 +67,8 @@ int main(void){
 
     for(int i=0; i<numberOfPoints; i++){
         static float buffer = 0;
-        buffer += a[i].velocity;
         fprintf(gp, "%f\t%f\n", a[i].time, buffer);
+        buffer += (a[i].velocity+a[i+1].velocity)/2;
     }
     fprintf(gp,"e\n"); //データ終了
 
