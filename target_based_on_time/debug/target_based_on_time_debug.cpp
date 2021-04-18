@@ -27,9 +27,9 @@ int main(void){
     //範囲設定//
 
     //データ作成//
-
+    float initialPosition = 0.0f;
     TargetBasedOnTime test;
-    test.set(150.0f, 0.0f,0.2f,3.5f, 5,1);
+    test.set(100.0f, initialPosition,0.2f,10.0f, 50.0f, 10.0f);
 
 //    dot a[NX];
 //    float dx = test.getTimeRequired()/(float)NX;
@@ -66,7 +66,7 @@ int main(void){
     fprintf(gp,"e\n"); //データ終了
 
     for(int i=0; i<numberOfPoints; i++){
-        static float buffer = 0;
+        static float buffer = initialPosition;
         fprintf(gp, "%f\t%f\n", a[i].time, buffer);
         buffer += (a[i].velocity+a[i+1].velocity)/2;
     }

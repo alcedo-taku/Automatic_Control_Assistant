@@ -26,7 +26,7 @@ void TargetBasedOnTime::set(float targetPosition, float initialPosition, float m
 
         //最高速度の計算
         if (targetPositionDistance < borderDistance){
-            maxVelocityThisTime = sqrtf(2*targetPositionDistance*maxAcceleration/M_PI + pow2(firstVelocity)/2) + pow2(finalVelocity)/2;
+            maxVelocityThisTime = sqrtf(2*targetPositionDistance*maxAcceleration/M_PI + pow2(firstVelocity)/2 + pow2(finalVelocity)/2 );
         }else {
             maxVelocityThisTime = this->maxVelocity;
         }
@@ -81,10 +81,14 @@ void TargetBasedOnTime::update(uint16_t time){
 
 
 float TargetBasedOnTime::getVelocityBasic(float time, float bottomUp){
+    if (maxVelocityThisTime == bottomUp)
+        return 0;
 	return -(maxVelocityThisTime-bottomUp) /2 *cosf(2*maxAcceleration/(maxVelocityThisTime-bottomUp)*time) + (maxVelocityThisTime-bottomUp)/2 + bottomUp;;
 }
 
 float TargetBasedOnTime::getPositionBasic(float time, float bottomUp){
+    if (maxVelocityThisTime == bottomUp)
+        return 0;
 	return -pow2(maxVelocityThisTime-bottomUp) /(4*maxAcceleration) *sinf(2*maxAcceleration /(maxVelocityThisTime-bottomUp) *time) + (maxVelocityThisTime-bottomUp)/2*time + bottomUp*time;
 }
 
