@@ -58,9 +58,17 @@ int main(void){
     // fprintf(gp, "plot '-' with lines  linetype 1  title \"a(time)\"\n"); //ラインタイプ、タイトル指定
 
     fprintf(gp, "plot '-' with points linetype 1  title \"position(time)\", \
-                      '-' with points linetype 2  title \"velocity(time)\"\n"); //データ送信準備
+                      '-' with points linetype 2  title \"velocityから積分したposition(time)\", \
+                      '-' with points linetype 3  title \"velocity(time)\"\n"); //データ送信準備
     for(int i=0; i<numberOfPoints; i++){
         fprintf(gp, "%f\t%f\n", a[i].time, a[i].position); // データの書き込み 送信
+    }
+    fprintf(gp,"e\n"); //データ終了
+
+    for(int i=0; i<numberOfPoints; i++){
+        static float buffer = 0;
+        buffer += a[i].velocity;
+        fprintf(gp, "%f\t%f\n", a[i].time, buffer);
     }
     fprintf(gp,"e\n"); //データ終了
 
