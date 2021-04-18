@@ -9,6 +9,7 @@
   - [コンストラクタ](#コンストラクタ)
     - [TargetBasedOnTime::TargetBasedOnTime()](#targetbasedontimetargetbasedontime)
   - [関数](#関数)
+    - [TargetBasedOnTime::set(float, float, float, float, float, float)](#targetbasedontimesetfloat-float-float-float-float-float)
     - [TargetBasedOnTime::set(float, float, float, float)](#targetbasedontimesetfloat-float-float-float)
     - [TargetBasedOnTime::set(float, float, float)](#targetbasedontimesetfloat-float-float)
     - [TargetBasedOnTime::setTarget(float)](#targetbasedontimesettargetfloat)
@@ -29,6 +30,24 @@
 > ```
 
 ## 関数
+
+##### TargetBasedOnTime::set(float, float, float, float, float, float)
+> ```c++
+> void set(
+>     float targetPosition,
+>     float initialPosition,
+>     float maxAcceleration,
+>     float maxVelocity,
+>     float firstVelocity,
+>     float finalVelocity
+> );
+> ```
+> 目標位置、現在位置、最大加速度、最大速度、初期速度、最終速度を設定します。
+> ```c++
+> // 例
+> arm.set(150, 50, 25, 50, 20, 10);
+> ```
+
 ##### TargetBasedOnTime::set(float, float, float, float)
 > ```c++
 > void set(
@@ -38,7 +57,7 @@
 >     float maxVelocity
 > );
 > ```
-> 目標位置、現在位置、最大加速度、最大速度を設定します。  
+> 初期速度、最終速度を0とし、目標位置、現在位置、最大加速度、最大速度を設定します。  
 > ```c++
 > // 例
 > arm.set(150, 50, 25, 50);
