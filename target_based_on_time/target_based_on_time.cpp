@@ -13,7 +13,11 @@ void TargetBasedOnTime::set(float targetPosition, float initialPosition, float m
         this->initialPosition = initialPosition;
 
         this->firstVelocity = firstVelocity;
+        if (maxVelocity < firstVelocity)
+            firstVelocity = maxVelocity;
         this->finalVelocity = finalVelocity;
+        if (maxVelocity < finalVelocity)
+            finalVelocity = maxVelocity;
 
         targetPositionDistance = std::abs(targetPosition-initialPosition);
 
