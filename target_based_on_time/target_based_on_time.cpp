@@ -22,7 +22,7 @@ void TargetBasedOnTime::set(float targetPosition, float initialPosition, float m
         targetPositionDistance = std::abs(targetPosition-initialPosition);
 
         //加速しきれる最小距離の計算
-        borderDistance = (pow2(maxVelocity)-pow2(firstVelocity))*M_PI/(4*maxAcceleration) + (pow2(maxVelocity)-pow2(finalVelocity))*M_PI/(4*maxAcceleration);
+        borderDistance = M_PI/(4*maxAcceleration) * ( 2*pow2(maxVelocity) - pow2(firstVelocity) - pow2(finalVelocity) );
 
         //最高速度の計算
         if (targetPositionDistance < borderDistance){
