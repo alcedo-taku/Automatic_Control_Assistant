@@ -27,7 +27,7 @@ int main(void){
     //範囲設定//
 
     //データ作成//
-    float initialPosition = 0.0f;
+    float initialPosition = 1000.0f;
     TargetBasedOnTime test;
     test.set(500.0f, initialPosition,0.2f,10.0f, 5.0f, 1.0f);
 

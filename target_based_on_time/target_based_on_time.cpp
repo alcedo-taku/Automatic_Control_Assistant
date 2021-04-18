@@ -6,8 +6,11 @@ TargetBasedOnTime::TargetBasedOnTime(){
 
 void TargetBasedOnTime::set(float targetPosition, float initialPosition, float maxAcceleration, float maxVelocity, float firstVelocity, float finalVelocity){
     if (targetPosition != this->targetPosition || maxAcceleration != this->maxAcceleration || maxVelocity != this->maxVelocity){
-        this->maxAcceleration = maxAcceleration;
-        this->maxVelocity = maxVelocity;
+        // 最大加速度、最大速度を設定（負の数は正の数に直す　0の場合は処理終了）
+        this->maxAcceleration = maxAcceleration = std::abs(maxAcceleration);
+        this->maxVelocity = maxVelocity = std::abs(maxVelocity);
+        if (maxVelocity == 0.0 || maxAcceleration == 0.0)
+            return;
 
         this->targetPosition = targetPosition;
         this->initialPosition = initialPosition;
@@ -28,7 +31,7 @@ void TargetBasedOnTime::set(float targetPosition, float initialPosition, float m
         if (targetPositionDistance < borderDistance){
             maxVelocityThisTime = sqrtf(2*targetPositionDistance*maxAcceleration/M_PI + pow2(firstVelocity)/2 + pow2(finalVelocity)/2 );
         }else {
-            maxVelocityThisTime = this->maxVelocity;
+            maxVelocityThisTime = maxVelocity;
         }
 
         //加速時間、等速時間、減速時間の計算
@@ -56,6 +59,10 @@ void TargetBasedOnTime::setTarget(float targetPosition){
 
 
 void TargetBasedOnTime::update(uint16_t time){
+    // 最大加速度、最大速度が0の場合、そのまま処理終了
+    if (maxVelocity == 0.0 || maxAcceleration == 0.0)
+        return;
+
 	if (0 <= time  &&  time < periodOfAcceleration) { //period of acceleration
 		velocity = getVelocityBasic(time, firstVelocity);
 		position = getPositionBasic(time, firstVelocity);
