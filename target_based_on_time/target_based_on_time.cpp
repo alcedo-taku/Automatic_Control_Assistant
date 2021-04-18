@@ -58,7 +58,7 @@ void TargetBasedOnTime::setTarget(float targetPosition){
 
 
 
-void TargetBasedOnTime::update(uint16_t time){
+void TargetBasedOnTime::update(uint32_t time){
     // 最大加速度、最大速度が0の場合、そのまま処理終了
     if (maxVelocity == 0.0 || maxAcceleration == 0.0)
         return;

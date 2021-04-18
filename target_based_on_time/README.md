@@ -13,7 +13,7 @@
     - [TargetBasedOnTime::set(float, float, float, float)](#targetbasedontimesetfloat-float-float-float)
     - [TargetBasedOnTime::set(float, float, float)](#targetbasedontimesetfloat-float-float)
     - [TargetBasedOnTime::setTarget(float)](#targetbasedontimesettargetfloat)
-    - [TargetBasedOnTime::update(uint16_t)](#targetbasedontimeupdateuint16_t)
+    - [TargetBasedOnTime::update(uint32_t)](#targetbasedontimeupdateuint32_t)
     - [TargetBasedOnTime::getVelocity()](#targetbasedontimegetvelocity)
     - [TargetBasedOnTime::getPosition()](#targetbasedontimegetposition)
     - [TargetBasedOnTime::getTimeRequired()](#targetbasedontimegettimerequired)
@@ -90,9 +90,9 @@
 > arm.setTarget(100);
 > ```
 
-##### TargetBasedOnTime::update(uint16_t)
+##### TargetBasedOnTime::update(uint32_t)
 > ```c++
-> void update(uint16_t time);
+> void update(uint32_t time);
 > ```
 > 渡された時間を元に、 `velocity` と `position` を更新します。  
 > ```c++

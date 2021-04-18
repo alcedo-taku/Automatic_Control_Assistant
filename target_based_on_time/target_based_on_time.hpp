@@ -11,7 +11,7 @@ public:
 	void set(float targetPosition, float initialPosition, float maxAcceleration, float maxVelocity);
 	void set(float targetPositionDistance, float maxAcceleration, float maxVelocity);
 	void setTarget(float targetPosition);
-	void update(uint16_t time);
+	void update(uint32_t time);
 	float getPosition();
 	float getVelocity();
 	float getTimeRequired(); //目標値に達するまでの時間を返す
