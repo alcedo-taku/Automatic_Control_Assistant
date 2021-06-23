@@ -21,6 +21,7 @@
     - [PID_controller_velocity::getOperation()](#pid_controller_velocitygetoperation)  
     - [PID_controller_velocity::resetOperation()](#pid_controller_velocityresetoperation)  
 
+
 # PID_Controller
 
 通常のPID(位置型PID)を簡単に実装できるライブラリ
@@ -49,7 +50,7 @@
 >   const float frequency // 制御周波数
 > )
 > ```
-> 上記の値を設定します。
+> 各ゲインの値と制御周波数を設定します。
 > ```c++
 > // 例
 > PID_controller pid_controller(1, 0.4, 0.02, 1);
@@ -90,8 +91,6 @@
 > ```
 
 
-
-
 # PID_controller_velocity
 
 速度型PIDを簡単に実装できるライブラリ
@@ -120,7 +119,7 @@
 >   const float frequency // 制御周波数
 > )
 > ```
-> 上記の値を設定します。
+> 各ゲインの値と制御周波数を設定します。
 > ```c++
 > // 例
 > PID_controller pid_controller(1, 0.4, 0.02, 1);
