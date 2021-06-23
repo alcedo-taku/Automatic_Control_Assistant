@@ -10,9 +10,7 @@
         - [PID_controller::PID_controller(const PID_Element &, const float)](#pid_controllerpid_controllerconst-pid_element--const-float)
         - [PID_controller::PID_controller(float, float, float, const float)](#pid_controllerpid_controllerfloat-float-float-const-float)
   - [関数](#関数)
-        - [PID_controller::setTarget(float)](#pid_controllersettargetfloat)
-        - [void PID_controller::updateOperation(float current)](#void-pid_controllerupdateoperationfloat-current)
-        - [PID_controller::updateOperation(float, float)](#pid_controllerupdateoperationfloat-float)
+        - [void PID_controller::updateOperation(float difference)](#void-pid_controllerupdateoperationfloat-difference)
         - [PID_controller::resetIntegral()](#pid_controllerresetintegral)
         - [PID_controller::getOperation()](#pid_controllergetoperation)
 - [PID_controller_velocity](#pid_controller_velocity)
@@ -20,9 +18,7 @@
         - [PID_controller_velocity::PID_controller_velocity(const PID_Element &,const float)](#pid_controller_velocitypid_controller_velocityconst-pid_element-const-float)
         - [PID_controller_velocity::PID_controller_velocity(float ,float ,float ,const float)](#pid_controller_velocitypid_controller_velocityfloat-float-float-const-float)
   - [関数](#関数-1)
-          - [PID_controller_velocity::setTarget(float)](#pid_controller_velocitysettargetfloat)
         - [PID_controller_velocity::updateOperation(float)](#pid_controller_velocityupdateoperationfloat)
-        - [PID_controller_velocity::updateOperation(float , float)](#pid_controller_velocityupdateoperationfloat--float)
         - [PID_controller_velocity::getOperation()](#pid_controller_velocitygetoperation)
           - [PID_controller_velocity::resetOperation()](#pid_controller_velocityresetoperation)
 
@@ -76,41 +72,16 @@
 
 ## 関数
 
-##### PID_controller::setTarget(float)
-> ```c++
-> void setTarget(
->   float target
-> )
-> ```
-> 目標値を設定します。
-> ```c++
-> // 例
-> pid_controller.setTarget(1000);
-> ```
-
-##### void PID_controller::updateOperation(float current)
+##### void PID_controller::updateOperation(float difference)
 > ```c++
 > void updateOperation(
->   float current
+>   float difference
 > )
 > ```
-> 現在値を設定し、内部で出力値を更新します。
+> 誤差値を設定し、内部で出力値を更新します。
 > ```c++
 > // 例
 > pid_controller.updateOperation(position_x);
-> ```
-
-##### PID_controller::updateOperation(float, float)
-> ```c++
-> void updateOperation(
->   float target,
->   float current
-> )
-> ```
-> 目標値と現在地を設定し、内部で出力値を更新します。
-> ```c++
-> // 例
-> pid_controller.updateOperation(target_position_x, position_x);
 > ```
 
 ##### PID_controller::resetIntegral()
@@ -172,39 +143,16 @@
 
 ## 関数
 
-###### PID_controller_velocity::setTarget(float)
-> ```c++
-> void setTarget(float target)
-> ```
-> 目標値を設定します。
-> ```c++
-> // 例
-> pid_controller_velocity.setTarget(1000);
-> ```
-
 ##### PID_controller_velocity::updateOperation(float)
 > ```c++
 > void updateOperation(
->   float current
+>   float difference
 > )
 > ```
-> 現在値を設定し、内部で出力値の更新します。
+> 誤差値を設定し、内部で出力値の更新します。
 > ```c++
 > // 例
 > pid_controller_velocity.updateOperation(position_x);
-> ```
-
-##### PID_controller_velocity::updateOperation(float , float)
-> ```c++
-> void updateOperation(
->   float target, 
->   float current
-> )
-> ```
-> 目標値と現在地を設定し、内部で出力値を更新します。
-> ```c++
-> // 例
-> pid_controller_velocity.updateOperation(target_position_x, position_x);
 > ```
 
 ##### PID_controller_velocity::getOperation()
