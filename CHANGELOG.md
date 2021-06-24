@@ -1,5 +1,9 @@
 # 変更履歴
 
+## v2.3.0
+- クラスを追加 
+  - `PID_Controller`
+
 ## v2.2.0
 - TargetBasedOnTime
   - 初期速度と最終速度を設定できる機能を追加
