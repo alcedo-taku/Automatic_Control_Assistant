@@ -1,8 +1,13 @@
 # 変更履歴
 
-## v2.2.0
+## v2.3.0
 - クラスを追加 
   - `PID_Controller`
+
+## v2.2.0
+- TargetBasedOnTime
+  - 初期速度と最終速度を設定できる機能を追加
+  - time のデータ型を uint32_t に変更
 
 ## v2.1.0
 - TargetBasedOnTime
