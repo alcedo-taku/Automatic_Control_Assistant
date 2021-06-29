@@ -1,9 +1,9 @@
 #include"omni_wheel_controller.hpp"
 
 OmniWheelController::OmniWheelController(
-        float robot_radius
+    float robot_radius
 ):
-        robot_radius(robot_radius)
+    robot_radius(robot_radius)
 {
 
 }

@@ -20,7 +20,7 @@ private:
     void setRobot(float);
 public:
     ConversionVelocityFieldToWheel(
-            float robot_radius
+         float robot_radius
     );
     void setVelocity(float,float,float,float);
     std::array<int16_t, 4> getOmni();
