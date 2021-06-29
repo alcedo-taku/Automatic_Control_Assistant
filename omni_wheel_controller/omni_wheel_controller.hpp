@@ -1,9 +1,9 @@
-#ifndef CONVERSION_VELOCITY_FIELD_TO_WHEEL
-#define CONVERSION_VELOCITY_FIELD_TO_WHEEL
+#ifndef OMNI_WHEEL_CONTROLLER
+#define OMNI_WHEEL_CONTROLLER
 #include<array>
 #include<cmath>
 
-class ConversionVelocityFieldToWheel{
+class OmniWheelController{
 private:
     float field_velocity_x;
     float field_velocity_y;
@@ -26,4 +26,4 @@ public:
     std::array<int16_t, 4> getOmni();
 };
 
-#endif //CONVERSION_VELOCITY_FIELD_TO_WHEEL
+#endif //OMNI_WHEEL_CONTROLLER
