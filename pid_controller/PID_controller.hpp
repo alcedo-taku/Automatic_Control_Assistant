@@ -2,6 +2,8 @@
 #define PID_CONTROLLER_HPP
 #include "PID_controller_util.hpp"
 
+namespace aca {
+
 class PID_controller
 {
 private:
@@ -17,4 +19,7 @@ public:
 	void resetIntegral();
 	float getOperation();
 };
+
+} // namespace aca
+
 #endif //PID_CONTROLLER_HPP

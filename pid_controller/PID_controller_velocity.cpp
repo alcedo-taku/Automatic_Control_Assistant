@@ -1,5 +1,7 @@
 #include "PID_controller_velocity.hpp"
 
+namespace aca {
+
 PID_controller_velocity::PID_controller_velocity(
     const PID_Element &index,
     const float frequency
@@ -44,4 +46,4 @@ void PID_controller_velocity::resetOperation(){
 	operation_value = 0;
 }
 
-
+} // namespace aca
