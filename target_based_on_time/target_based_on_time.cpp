@@ -1,5 +1,7 @@
 #include "target_based_on_time.hpp"
 
+namespace aca {
+
 TargetBasedOnTime::TargetBasedOnTime(){
 
 }
@@ -110,3 +112,5 @@ float TargetBasedOnTime::getPosition(){
 float TargetBasedOnTime::getTimeRequired(){
 	return periodOfAcceleration + periodOfConstantVelocity + periodOfDeceleration;
 }
+
+} // namespace aca
