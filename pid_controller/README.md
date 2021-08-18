@@ -68,7 +68,7 @@
 > 誤差値を設定し、内部で出力値を更新します。
 > ```c++
 > // 例
-> pid_controller.updateOperation(position_x);
+> pid_controller.updateOperation(target_position - current_position);
 > ```
 
 ##### PID_controller::resetIntegral()
@@ -138,7 +138,7 @@
 > 誤差値を設定し、内部で出力値の更新します。
 > ```c++
 > // 例
-> pid_controller_velocity.updateOperation(position_x);
+> pid_controller_velocity.updateOperation(target_position - current_position);
 > ```
 
 ##### PID_controller_velocity::getOperation()
