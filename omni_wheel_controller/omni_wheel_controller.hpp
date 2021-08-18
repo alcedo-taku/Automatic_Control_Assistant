@@ -3,6 +3,8 @@
 #include<array>
 #include<cmath>
 
+namespace aca {
+
 class OmniWheelController{
 private:
     float field_velocity_x;
@@ -25,5 +27,7 @@ public:
     void setVelocity(float,float,float,float);
     std::array<int16_t, 4> getOmni();
 };
+
+} // namespace aca
 
 #endif //OMNI_WHEEL_CONTROLLER

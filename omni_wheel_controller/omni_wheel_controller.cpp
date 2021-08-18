@@ -1,5 +1,7 @@
 #include"omni_wheel_controller.hpp"
 
+namespace aca {
+
 OmniWheelController::OmniWheelController(
     float robot_radius // ロボット半径
 ):
@@ -27,3 +29,5 @@ void OmniWheelController::setVelocity(float field_velocity_x,float field_velocit
 std::array<int16_t, 4>OmniWheelController::getOmni(){
     return omni_velocity;
 }
+
+} // namespace aca

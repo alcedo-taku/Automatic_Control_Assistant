@@ -1,5 +1,7 @@
 #include "PID_controller.hpp"
 
+namespace aca {
+
 PID_controller::PID_controller(
 	const PID_Element &index,
 	const float frequency
@@ -36,3 +38,5 @@ float PID_controller::getOperation(){
 		 + operation.integral*index.integral
 		 + operation.differential*index.differential;
 }
+
+} // namespace aca

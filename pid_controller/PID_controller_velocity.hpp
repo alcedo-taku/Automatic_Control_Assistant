@@ -3,6 +3,8 @@
 
 #include "PID_controller_util.hpp"
 
+namespace aca {
+
 class PID_controller_velocity
 {
 private:
@@ -20,4 +22,7 @@ public:
     float getOperation();
     void resetOperation();
 };
+
+} // namespace aca
+
 #endif //PID_CONTROLLER_VELOCITY_HPP

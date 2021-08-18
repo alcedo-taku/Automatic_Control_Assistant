@@ -4,6 +4,8 @@
 #include <cmath>
 #include <cstdint>
 
+namespace aca {
+
 class TargetBasedOnTime{
 public:
 	TargetBasedOnTime();
@@ -38,5 +40,7 @@ private:
 
     float pow2(float x){return x*x;}
 };
+
+} // namespace aca
 
 #endif //AUTOMATIC_CONTROL_ASSISTANT_TARGET_BASED_ON_TIME
