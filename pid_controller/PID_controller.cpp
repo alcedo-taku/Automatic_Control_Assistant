@@ -3,10 +3,10 @@
 namespace aca {
 
 PID_controller::PID_controller(
-	const PID_Element &index,
+	const PID_Element &pid_parameter,
 	const float frequency
 ):
-        index(index),
+        pid_parameter(pid_parameter),
         frequency(frequency)
 {
 	operation.integral = 0;
@@ -34,9 +34,9 @@ void PID_controller::resetIntegral(){
 }
 
 float PID_controller::getOperation(){
-	return operation.proportional*index.proportional
-		 + operation.integral*index.integral
-		 + operation.differential*index.differential;
+	return operation.proportional*pid_parameter.proportional
+		 + operation.integral*pid_parameter.integral
+		 + operation.differential*pid_parameter.differential;
 }
 
 } // namespace aca

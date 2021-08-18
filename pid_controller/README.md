@@ -31,14 +31,15 @@
 ##### PID_controller::PID_controller(const PID_Element &, const float)
 > ```c++
 > PID_controller(
->   const PID_Element &index, // PIDのパラメータを保持する構造体
+>   const PID_Element &pid_parameter, // PIDのパラメータを保持する構造体
 >   const float frequency //制御周波数
 > )
 > ```
 > 上記の値を設定します。
 > ```c++
 > // 例
-> PID_controller pid_controller(index,1);
+> PID_Element pid_parameter = {10, 0.4, 0.02};
+> PID_controller pid_controller(pid_parameter,1);
 > ```
 
 ##### PID_controller::PID_controller(float, float, float, const float)
@@ -53,7 +54,7 @@
 > 各ゲインの値と制御周波数を設定します。
 > ```c++
 > // 例
-> PID_controller pid_controller(1, 0.4, 0.02, 1);
+> PID_controller pid_controller(10, 0.4, 0.02, 1);
 > ```
 
 ## 関数
@@ -100,14 +101,15 @@
 ##### PID_controller_velocity::PID_controller_velocity(const PID_Element &,const float)
 > ```c++
 > PID_controller_velocity(
->   const PID_Element &index, // PIDのパラメータを保持する構造体
+>   const PID_Element &pid_parameter, // PIDのパラメータを保持する構造体
 >   const float frequency //制御周波数
 > )
 > ```
 > 上記の値を設定します。
 > ```c++
 > // 例
-> PID_controller pid_controller(index,1);
+> PID_Element pid_parameter = {10, 0.4, 0.02};
+> PID_controller pid_controller(pid_parameter,1);
 > ```
 
 ##### PID_controller_velocity::PID_controller_velocity(float ,float ,float ,const float)
@@ -122,7 +124,7 @@
 > 各ゲインの値と制御周波数を設定します。
 > ```c++
 > // 例
-> PID_controller pid_controller(1, 0.4, 0.02, 1);
+> PID_controller pid_controller(10, 0.4, 0.02, 1);
 > ```
 
 ## 関数

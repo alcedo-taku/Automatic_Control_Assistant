@@ -3,10 +3,10 @@
 namespace aca {
 
 PID_controller_velocity::PID_controller_velocity(
-    const PID_Element &index,
+    const PID_Element &pid_parameter,
     const float frequency
 ):
-    index(index),
+    pid_parameter(pid_parameter),
     frequency(frequency)
 {
     operation.integral = 0;
@@ -30,9 +30,9 @@ void PID_controller_velocity::updateOperation(float difference){
     last_proportional = operation.proportional;
 
 	float operation_velocity =
-			operation.proportional * index.proportional
-	           + operation.integral * index.integral
-	           + operation.differential * index.differential;
+			operation.proportional * pid_parameter.proportional
+	           + operation.integral * pid_parameter.integral
+	           + operation.differential * pid_parameter.differential;
 	operation_value += (operation_velocity + last_operation_velocity) / 2 / frequency;
 
 	last_operation_velocity = operation_velocity;
