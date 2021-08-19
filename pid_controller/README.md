@@ -59,7 +59,7 @@
 
 ## 関数
 
-##### void PID_controller::updateOperation(float difference)
+##### PID_controller::updateOperation(float difference)
 > ```c++
 > void updateOperation(
 >   float difference
