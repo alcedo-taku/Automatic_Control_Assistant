@@ -1,5 +1,14 @@
 # 変更履歴
 
+## v2.4.0
+- クラスを追加
+  - `OmniWheelController`
+- PID_Controller
+  - init関数を追加
+  - `index` を `pid_parameter` に名前変更
+  - README をわかりやすくした
+‐ namespace `aca` を追加
+
 ## v2.3.0
 - クラスを追加 
   - `PID_Controller`
