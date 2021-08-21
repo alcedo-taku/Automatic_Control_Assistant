@@ -8,8 +8,8 @@ namespace aca {
 class PID_controller_velocity
 {
 private:
-    const PID_Element pid_parameter;
-    const float frequency;
+    PID_Element pid_parameter;
+    float frequency;
     PID_Element operation;
     float operation_value = 0;
     float last_difference = 0;
