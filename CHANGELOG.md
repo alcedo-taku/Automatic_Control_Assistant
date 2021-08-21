@@ -1,5 +1,9 @@
 # 変更履歴
 
+## v3.0.1
+- PID_Controller
+  - const変数を普通の変数に修正した
+
 ## v3.0.0
 - namespace `aca` を追加
 - クラスを追加
