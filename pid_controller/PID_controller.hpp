@@ -2,19 +2,32 @@
 #define PID_CONTROLLER_HPP
 #include "PID_controller_util.hpp"
 
+namespace aca {
+
 class PID_controller
 {
 private:
-	const PID_Element index;
-	const float frequency;
+	PID_Element pid_parameter;
+	float frequency;
 	PID_Element operation;
 	float last_difference = 0;
 
 public:
-	PID_controller(const PID_Element &index, const float frequency);
-	PID_controller(float proportional, float integral, float differential, const float frequency);
-	void updateOperation(float current);
+	PID_controller(const PID_Element &pid_parameter, const float frequency);
+	PID_controller(const float proportional, const float integral, const float differential, const float frequency);
+	PID_controller(const PID_Element &pid_parameter);
+	PID_controller(const float proportional, const float integral, const float differential);
+	PID_controller(const float frequency);
+	void init(const PID_Element &pid_parameter, const float frequency);
+	void init(const float proportional, const float integral, const float differential, const float frequency);
+	void init(const PID_Element &pid_parameter);
+	void init(const float proportional, const float integral, const float differential);
+	void init(const float frequency);
+	void updateOperation(const float current);
 	void resetIntegral();
 	float getOperation();
 };
+
+} // namespace aca
+
 #endif //PID_CONTROLLER_HPP
