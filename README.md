@@ -1,4 +1,4 @@
-# Automatic_Control_Assistant - 3.0.1
+# Automatic_Control_Assistant - 3.0.2
 ```c++
 #include "Automatic_Control_Assistant.hpp"
 ```
