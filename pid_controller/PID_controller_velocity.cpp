@@ -37,7 +37,7 @@ PID_controller_velocity::PID_controller_velocity(
 }
 
 PID_controller_velocity::PID_controller_velocity(const float frequency):
-    PID_controller_velocity(PID_Element{0, 0, 0}, 0)
+    PID_controller_velocity(PID_Element{0, 0, 0}, frequency)
 {
 }
 
@@ -52,15 +52,15 @@ void PID_controller_velocity::init(const float proportional, const float integra
 }
 
 void PID_controller_velocity::init(const PID_Element &pid_parameter){
-    init(pid_parameter, 0);
+    init(pid_parameter, frequency);
 }
 
 void PID_controller_velocity::init(const float proportional, const float integral, const float differential){
-    init(PID_Element{proportional, integral, differential}, 0);
+    init(PID_Element{proportional, integral, differential}, frequency);
 }
 
 void PID_controller_velocity::init(const float frequency){
-    init(PID_Element{0, 0, 0}, 0);
+    init(pid_parameter, frequency);
 }
 
 void PID_controller_velocity::updateOperation(float difference){
