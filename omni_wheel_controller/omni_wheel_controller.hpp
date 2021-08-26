@@ -36,6 +36,7 @@ public:
     void update(CoordinateSystem_3D field_velocity, float angle);
     void update(float field_velocity_x, float field_velocity_y, float field_velocity_angle, float angle);
     std::array<int16_t, NUMBER_OF_OMNI_WHEELS> get_wheel_velocity();
+    int16_t get_wheel_velocity(uint8_t wheel_number);
 };
 
 } // namespace aca

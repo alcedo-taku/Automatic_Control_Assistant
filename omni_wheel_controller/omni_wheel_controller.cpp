@@ -45,4 +45,9 @@ std::array<int16_t, NUMBER_OF_OMNI_WHEELS> OmniWheelController<NUMBER_OF_OMNI_WH
     return wheel_velocity;
 }
 
+template <int NUMBER_OF_OMNI_WHEELS>
+int16_t OmniWheelController<NUMBER_OF_OMNI_WHEELS>::get_wheel_velocity(uint8_t wheel_number){
+	return wheel_velocity[wheel_number];
+}
+
 } // namespace aca
