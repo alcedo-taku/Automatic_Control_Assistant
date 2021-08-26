@@ -5,27 +5,38 @@
 
 namespace aca {
 
+struct MechanicParameter{
+    float wheel_angle;
+    float distance_from_center;
+};
+
+struct Coefficient{
+    float cos_value;
+    float sit_value;
+    float distance_from_center;
+};
+
+struct CoordinateSystem_3D{
+    float x;
+    float y;
+    float angle;
+};
+
+template <int NUMBER_OF_OMNI_WHEELS>
 class OmniWheelController{
 private:
-    float field_velocity_x;
-    float field_velocity_y;
-    float rad;
-    float robot_radius;
+    CoordinateSystem_3D field_velocity;
+    std::array<MechanicParameter, NUMBER_OF_OMNI_WHEELS> mechanic_parameter;
+    constexpr std::array<Coefficient, NUMBER_OF_OMNI_WHEELS> coefficient;
+    std::array<int16_t, NUMBER_OF_OMNI_WHEELS> wheel_velocity;
 
-    float robot_velocity_x;
-    float robot_velocity_y;
-    std::array<int16_t, 4> omni_velocity;
-
-    static constexpr float cos45 = 1 / std::sqrt(2);
-
-    void setField(float,float,float);
-    void setRobot(float);
+    CoordinateSystem_3D rotation_matrix(CoordinateSystem_3D field_velocity, float angle);
+    void convert_each_wheel(CoordinateSystem_3D robot_velocity);
 public:
-    OmniWheelController(
-    	float robot_radius
-    );
-    void setVelocity(float,float,float,float);
-    std::array<int16_t, 4> getOmni();
+    OmniWheelController(std::array<MechanicParameter, NUMBER_OF_OMNI_WHEELS> mechanic_parameter);
+    void update(CoordinateSystem_3D field_velocity, float angle);
+    void update(float field_velocity_x, float field_velocity_y, float field_velocity_angle, float angle);
+    std::array<int16_t, NUMBER_OF_OMNI_WHEELS> get_wheel_velocity();
 };
 
 } // namespace aca
