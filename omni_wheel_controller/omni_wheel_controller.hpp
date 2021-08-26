@@ -27,7 +27,7 @@ class OmniWheelController{
 private:
     CoordinateSystem_3D field_velocity;
     std::array<MechanicParameter, NUMBER_OF_OMNI_WHEELS> mechanic_parameter;
-    constexpr std::array<Coefficient, NUMBER_OF_OMNI_WHEELS> coefficient;
+    std::array<Coefficient, NUMBER_OF_OMNI_WHEELS> coefficient;
     std::array<int16_t, NUMBER_OF_OMNI_WHEELS> wheel_velocity;
 
     CoordinateSystem_3D rotation_matrix(CoordinateSystem_3D field_velocity, float angle);
