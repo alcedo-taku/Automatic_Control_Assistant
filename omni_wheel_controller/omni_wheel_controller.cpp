@@ -3,11 +3,14 @@
 namespace aca {
 
 template <int NUMBER_OF_OMNI_WHEELS>
-OmniWheelController<NUMBER_OF_OMNI_WHEELS>::OmniWheelController(
-    std::array<MechanicParameter, NUMBER_OF_OMNI_WHEELS> mechanic_parameter
-):
-    mechanic_parameter(mechanic_parameter)
+constexpr OmniWheelController<NUMBER_OF_OMNI_WHEELS>::OmniWheelController(
+    std::array<MechanicParameter, NUMBER_OF_OMNI_WHEELS> mechanic_parameter)
 {
+	for (uint8_t i=0; i<NUMBER_OF_OMNI_WHEELS; i++) {
+		coefficient[i].sin_value = std::sin(mechanic_parameter[i].wheel_angle);
+		coefficient[i].cos_value = std::cos(mechanic_parameter[i].wheel_angle);
+		coefficient[i].distance_from_center = mechanic_parameter[i].distance_from_center;
+	}
 }
 
 template <int NUMBER_OF_OMNI_WHEELS>
@@ -23,7 +26,7 @@ CoordinateSystem_3D OmniWheelController<NUMBER_OF_OMNI_WHEELS>::rotation_matrix(
 template <int NUMBER_OF_OMNI_WHEELS>
 void OmniWheelController<NUMBER_OF_OMNI_WHEELS>::convert_each_wheel(CoordinateSystem_3D robot_velocity){
     for (uint8_t i=0; i<NUMBER_OF_OMNI_WHEELS; i++) {
-        wheel_velocity[i] = robot_velocity.x * coefficient[i].cos_value + robot_velocity.y * coefficient[i].sin_valuea + robot_velocity.angle * coefficient[i].distance_from_center;
+        wheel_velocity[i] = robot_velocity.x * coefficient[i].cos_value + robot_velocity.y * coefficient[i].sin_value + robot_velocity.angle * coefficient[i].distance_from_center;
     }
 }
 
