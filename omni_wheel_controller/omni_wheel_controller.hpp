@@ -22,7 +22,7 @@ struct CoordinateSystem_3D{
     float angle;
 };
 
-template <int NUMBER_OF_OMNI_WHEELS>
+template <std::size_t NUMBER_OF_OMNI_WHEELS>
 class OmniWheelController{
 private:
     CoordinateSystem_3D field_velocity;
@@ -32,7 +32,7 @@ private:
     CoordinateSystem_3D rotation_matrix(CoordinateSystem_3D field_velocity, float angle);
     void convert_each_wheel(CoordinateSystem_3D robot_velocity);
 public:
-    constexpr OmniWheelController(std::array<MechanicParameter, NUMBER_OF_OMNI_WHEELS> mechanic_parameter);
+    OmniWheelController(std::array<MechanicParameter, NUMBER_OF_OMNI_WHEELS> mechanic_parameter);
     void update(CoordinateSystem_3D field_velocity, float angle);
     void update(float field_velocity_x, float field_velocity_y, float field_velocity_angle, float angle);
     std::array<int16_t, NUMBER_OF_OMNI_WHEELS> get_wheel_velocity();
