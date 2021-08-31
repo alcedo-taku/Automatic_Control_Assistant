@@ -7,7 +7,7 @@
   - [目次](#目次)
   - [クラステンプレート](#クラステンプレート)
   - [コンストラクタ](#コンストラクタ)
-    - [OmniWheelController::OmniWheelControllerstd::array<MechanicParameter, NUMBER_OF_OMNI_WHEELS>)](#omniwheelcontrolleromniwheelcontrollerstdarraymechanicparameter-number_of_omni_wheels)
+    - [OmniWheelController::OmniWheel(std::array<MechanicParameter, NUMBER_OF_OMNI_WHEELS>)](#omniwheelcontrolleromniwheelstdarraymechanicparameter-number_of_omni_wheels)
   - [関数](#関数)
     - [OmniWheelController::update(CoordinateSystem_3D<float>, float)](#omniwheelcontrollerupdatecoordinatesystem_3dfloat-float)
     - [OmniWheelController::update(float, float, float, float)](#omniwheelcontrollerupdatefloat-float-float-float)
@@ -25,7 +25,7 @@ OUTPUT_TYPE: 各オムニホイールの速度の型
 
 ## コンストラクタ
 
-##### OmniWheelController::OmniWheelControllerstd::array<MechanicParameter, NUMBER_OF_OMNI_WHEELS>)
+##### OmniWheelController::OmniWheel(std::array<MechanicParameter, NUMBER_OF_OMNI_WHEELS>)
 > ```c++
 > OmniWheelController
 > (
@@ -59,7 +59,7 @@ OUTPUT_TYPE: 各オムニホイールの速度の型
 > 各ホイールの速度を更新します。
 > ```c++
 > // 例
-> aca::field_velocity
+> aca::field_velocity = {field_velocity_x, field_velocity_y, angular_velocity};
 > omniWheelController.update(field_velocity, angle);
 > ```
 
