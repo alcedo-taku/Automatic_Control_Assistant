@@ -11,7 +11,7 @@ struct MechanicParameter{
 };
 
 struct Coefficient{
-    float sit_value;
+    float sin_value;
     float cos_value;
     float distance_from_center;
 };
