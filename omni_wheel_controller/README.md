@@ -3,79 +3,99 @@
 オムニホイール駆動のための、x,y,回転方向の速度を各ホイールの速度に変換するためのライブラリ
 
 ## 目次
-- [PID_Controller](#pid_controller-1)  
-  - [コンストラクタ](#コンストラクタ)  
-    - [PID_controller::PID_controller(const PID_Element &, const float)](#pid_controllerpid_controllerconst-pid_element--const-float)  
-    - [PID_controller::PID_controller(float, float, float, const float)](#pid_controllerpid_controllerfloat-float-float-const-float)  
-  - [関数](#関数)  
-    - [void PID_controller::updateOperation(float difference)](#void-pid_controllerupdateoperationfloat-difference)  
-    - [PID_controller::resetIntegral()](#pid_controllerresetintegral)  
-    - [PID_controller::getOperation()](#pid_controllergetoperation)  
+[Omniwheelcontroller](#omniwheelcontroller)
+- [Omniwheelcontroller](#omniwheelcontroller)
+  - [目次](#目次)
+  - [クラステンプレート](#クラステンプレート)
+  - [コンストラクタ](#コンストラクタ)
+    - [OmniWheelController::OmniWheelControllerstd::array<MechanicParameter, NUMBER_OF_OMNI_WHEELS>)](#omniwheelcontrolleromniwheelcontrollerstdarraymechanicparameter-number_of_omni_wheels)
+  - [関数](#関数)
+    - [OmniWheelController::update(CoordinateSystem_3D<float>, float)](#omniwheelcontrollerupdatecoordinatesystem_3dfloat-float)
+    - [OmniWheelController::update(float, float, float, float)](#omniwheelcontrollerupdatefloat-float-float-float)
+    - [OmniWheelController::get_wheel_velocity()](#omniwheelcontrollerget_wheel_velocity)
+    - [OmniWheelController::get_wheel_velocity(uint8_t)](#omniwheelcontrollerget_wheel_velocityuint8_t)
 
+## クラステンプレート
+```c++
+template <std::size_t NUMBER_OF_OMNI_WHEELS, typename OUTPUT_TYPE>
+```
+```yaml
+NUMBER_OF_OMNI_WHEELS: オムニホイールの数
+OUTPUT_TYPE: 各オムニホイールの速度の型
+```
 
 ## コンストラクタ
 
-##### OmniWheelController::OmniWheelController(float)
+##### OmniWheelController::OmniWheelControllerstd::array<MechanicParameter, NUMBER_OF_OMNI_WHEELS>)
 > ```c++
-> OmniWheelController(
->   float robot_radius // ロボット半径
+> OmniWheelController
+> (
+>   std::array<MechanicParameter, NUMBER_OF_OMNI_WHEELS> mechanic_parameter
 > ) 
 > ```
-> 上記の値を設定します。
+> オムニホイールの取り付け位置を設定します。
 > ```c++
 > // 例
-> OmniWheelController omniWheelController(robot_radius);
+> aca::OmniWheelController<4, int16_t> omni_wheel_controller(
+>   std::array<MechanicParameter, 4>{
+>   	aca::MechanicParameter{ 3.0/4.0*M_PI, robot_radius},
+>   	aca::MechanicParameter{-3.0/4.0*M_PI, robot_radius},
+>   	aca::MechanicParameter{-1.0/4.0*M_PI, robot_radius},
+>   	aca::MechanicParameter{ 1.0/4.0*M_PI, robot_radius}
+>   }
+> );
 > ```
 
 ## 関数
 
-##### OmniWheelController::setField(float ,float , float)
+##### OmniWheelController::update(CoordinateSystem_3D<float>, float)
 > ```c++
-> void setField(
->   float field_velosity_x, // フィールド座標x方向の速度
->   float field_velosity_y, // フィールド座標y方向の速度
->   float rad // 現在のロボットの角度
-> )
-> ```
-> フィールド座標速度と現在のロボットの角度を入れ、ロボット座標速度を計算します。
-> ```c++
-> // 例
-> omniWheelController.setField(field_velosity_x, field_velosity_y, rad));
-> ```
-
-##### OmniWheelController::setRobot(float)
-> ```c++
-> void setRobot(
->   float angle_velocity
-> )
-> ```
-> ロボットの自転速度を入れ、各ホイールの速度を計算します。
-> ```c++
-> // 例
-> omniWheelController.setRobot(angle_velocity)
-> ```
-
-##### OmniWheelController::setVelocity(float, float, float, float)
-> ```c++
-> void setVelocity(
+> void update(
 >   float field_velocity_x,
 >   float field_velocity_y,
->   float angle_velocity,
->   float rad
+>   float angular_velocity,
+>   float angle
 > )
 > ```
-> 上記の値を入れ、内部で setField と setRobot を実行します。
+> 各ホイールの速度を更新します。
 > ```c++
 > // 例
-> omniWheelController.setVelocity(field_velocity_x, field_velocity_y, angle_velocity, rad);
+> aca::field_velocity
+> omniWheelController.update(field_velocity, angle);
 > ```
 
-##### OmniWheelController::getOmni()
+##### OmniWheelController::update(float, float, float, float)
 > ```c++
-> std::array<int16_t, 4> getOmni()
+> void update(
+>   float field_velocity_x,
+>   float field_velocity_y,
+>   float angular_velocity,
+>   float angle
+> )
+> ```
+> 各ホイールの速度を更新します。
+> 内部で上記の update を実行しています。
+> ```c++
+> // 例
+> omniWheelController.update(field_velocity_x, field_velocity_y, angular_velocity, angle);
+> ```
+
+##### OmniWheelController::get_wheel_velocity()
+> ```c++
+> std::array<OUTPUT_TYPE, NUMBER_OF_OMNI_WHEELS> get_wheel_velocity()
 > ```
 > 各ホイールの速度を保持したarray配列を返します。
 > ```c++
 > // 例
-> omniWheelController.getOmni();
+> omniWheelController.get_wheel_velocity();
+> ```
+
+##### OmniWheelController::get_wheel_velocity(uint8_t)
+> ```c++
+> OUTPUT_TYPE get_wheel_velocity(uint8_t wheel_number)
+> ```
+> 指定したホイールの速度を返します。
+> ```c++
+> // 例
+> omniWheelController.get_wheel_velocity(0);
 > ```
