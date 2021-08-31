@@ -52,8 +52,8 @@ public:
     void update(Coordinate<float> field_velocity, float angle){
         convert_each_wheel( rotation_matrix(field_velocity, angle) );
     };
-    void update(float field_velocity_x, float field_velocity_y, float field_velocity_angle, float angle){
-        update( Coordinate<float>{field_velocity_x, field_velocity_y, field_velocity_angle}, angle );
+    void update(float field_velocity_x, float field_velocity_y, float angular_velocity, float angle){
+        update( Coordinate<float>{field_velocity_x, field_velocity_y, angular_velocity}, angle );
     };
     std::array<OUTPUT_TYPE, NUMBER_OF_OMNI_WHEELS> get_wheel_velocity(){
         return wheel_velocity;
