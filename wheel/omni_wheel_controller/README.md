@@ -1,4 +1,4 @@
-# Omniwheelcontroller
+# OmniWheelController
 
 オムニホイール駆動のための、x,y,回転方向の速度を各ホイールの速度に変換するためのライブラリ
 
