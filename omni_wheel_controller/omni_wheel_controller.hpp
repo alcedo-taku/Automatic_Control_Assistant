@@ -23,11 +23,11 @@ struct CoordinateSystem_3D{
     T angle;
 };
 
-template <std::size_t NUMBER_OF_OMNI_WHEELS>
+template <std::size_t NUMBER_OF_OMNI_WHEELS, typename OUTPUT_TYPE>
 class OmniWheelController{
 private:
     std::array<Coefficient, NUMBER_OF_OMNI_WHEELS> coefficient;
-    std::array<int16_t, NUMBER_OF_OMNI_WHEELS> wheel_velocity;
+    std::array<OUTPUT_TYPE, NUMBER_OF_OMNI_WHEELS> wheel_velocity;
 
     CoordinateSystem_3D<float> rotation_matrix(CoordinateSystem_3D<float> field_velocity, float angle){
         CoordinateSystem_3D<float> robot_velocity;
@@ -55,10 +55,10 @@ public:
     void update(float field_velocity_x, float field_velocity_y, float field_velocity_angle, float angle){
         update( CoordinateSystem_3D<float>{field_velocity_x, field_velocity_y, field_velocity_angle}, angle );
     };
-    std::array<int16_t, NUMBER_OF_OMNI_WHEELS> get_wheel_velocity(){
+    std::array<OUTPUT_TYPE, NUMBER_OF_OMNI_WHEELS> get_wheel_velocity(){
         return wheel_velocity;
     };
-    int16_t get_wheel_velocity(uint8_t wheel_number){
+    OUTPUT_TYPE get_wheel_velocity(uint8_t wheel_number){
         return wheel_velocity[wheel_number];
     };
 };
