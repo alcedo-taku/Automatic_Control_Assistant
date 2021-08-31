@@ -26,7 +26,6 @@ struct CoordinateSystem_3D{
 template <std::size_t NUMBER_OF_OMNI_WHEELS>
 class OmniWheelController{
 private:
-    CoordinateSystem_3D<float> field_velocity;
     std::array<Coefficient, NUMBER_OF_OMNI_WHEELS> coefficient;
     std::array<int16_t, NUMBER_OF_OMNI_WHEELS> wheel_velocity;
 
