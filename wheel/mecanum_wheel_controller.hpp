@@ -1,17 +1,11 @@
 #ifndef MECANUM_WHEEL_CONTROLLER_HPP
 #define MECANUM_WHEEL_CONTROLLER_HPP
 
-#include<array>
-#include<cmath>
+#include <array>
+#include <cmath>
+#include "coordinate.hpp"
 
 namespace aca {
-
-template <typename T>
-struct Coordinate{
-    T x;
-    T y;
-    T angle;
-};
 
 template <typename OUTPUT_TYPE>
 class MecanumWheelController {
