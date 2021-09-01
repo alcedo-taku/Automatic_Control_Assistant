@@ -7,10 +7,10 @@
 
 namespace aca {
 
-template <std::size_t NUMBER_OF_OMNI_WHEELS, typename OUTPUT_TYPE>
+template <std::size_t NUMBER_OF_WHEELS, typename OUTPUT_TYPE>
 class WheelController{
 protected:
-    std::array<OUTPUT_TYPE, NUMBER_OF_OMNI_WHEELS> wheel_velocity;
+    std::array<OUTPUT_TYPE, NUMBER_OF_WHEELS> wheel_velocity;
 private:
     Coordinate<float> rotation_matrix(Coordinate<float> field_velocity, float angle){
         Coordinate<float> robot_velocity;
@@ -27,7 +27,7 @@ public:
     void update(float field_velocity_x, float field_velocity_y, float angular_velocity, float angle){
         update( Coordinate<float>{field_velocity_x, field_velocity_y, angular_velocity}, angle );
     };
-    std::array<OUTPUT_TYPE, NUMBER_OF_OMNI_WHEELS> get_wheel_velocity(){
+    std::array<OUTPUT_TYPE, NUMBER_OF_WHEELS> get_wheel_velocity(){
         return wheel_velocity;
     };
     OUTPUT_TYPE get_wheel_velocity(uint8_t wheel_number){
@@ -50,20 +50,20 @@ struct Coefficient{
     float distance_from_center;
 };
 
-template <std::size_t NUMBER_OF_OMNI_WHEELS, typename OUTPUT_TYPE>
-class OmniWheelController : public WheelController<NUMBER_OF_OMNI_WHEELS, OUTPUT_TYPE>{
+template <std::size_t NUMBER_OF_WHEELS, typename OUTPUT_TYPE>
+class OmniWheelController : public WheelController<NUMBER_OF_WHEELS, OUTPUT_TYPE>{
 private:
-    std::array<Coefficient, NUMBER_OF_OMNI_WHEELS> coefficient;
-//    std::array<OUTPUT_TYPE, NUMBER_OF_OMNI_WHEELS> wheel_velocity;
+    std::array<Coefficient, NUMBER_OF_WHEELS> coefficient;
+//    std::array<OUTPUT_TYPE, NUMBER_OF_WHEELS> wheel_velocity;
 
     void convert_each_wheel(Coordinate<float> robot_velocity) override {
-        for (uint8_t i=0; i<NUMBER_OF_OMNI_WHEELS; i++) {
+        for (uint8_t i=0; i<NUMBER_OF_WHEELS; i++) {
         	this->wheel_velocity[i] = robot_velocity.x * coefficient[i].cos_value + robot_velocity.y * coefficient[i].sin_value + robot_velocity.angle * coefficient[i].distance_from_center;
         }
     };
 public:
-    OmniWheelController(std::array<MechanicParameter, NUMBER_OF_OMNI_WHEELS> mechanic_parameter){
-        for (uint8_t i=0; i<NUMBER_OF_OMNI_WHEELS; i++) {
+    OmniWheelController(std::array<MechanicParameter, NUMBER_OF_WHEELS> mechanic_parameter){
+        for (uint8_t i=0; i<NUMBER_OF_WHEELS; i++) {
             coefficient[i].sin_value            = std::sin(mechanic_parameter[i].wheel_angle);
             coefficient[i].cos_value            = std::cos(mechanic_parameter[i].wheel_angle);
             coefficient[i].distance_from_center = mechanic_parameter[i].distance_from_center;
