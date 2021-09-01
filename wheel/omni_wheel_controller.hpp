@@ -1,7 +1,9 @@
 #ifndef OMNI_WHEEL_CONTROLLER
 #define OMNI_WHEEL_CONTROLLER
-#include<array>
-#include<cmath>
+
+#include <array>
+#include <cmath>
+#include "coordinate.hpp"
 
 namespace aca {
 
@@ -14,13 +16,6 @@ struct Coefficient{
     float sin_value;
     float cos_value;
     float distance_from_center;
-};
-
-template <typename T>
-struct Coordinate{
-    T x;
-    T y;
-    T angle;
 };
 
 template <std::size_t NUMBER_OF_OMNI_WHEELS, typename OUTPUT_TYPE>
