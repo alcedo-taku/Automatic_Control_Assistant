@@ -80,7 +80,7 @@ void CoordinateMeasurerTriangle::offset(CoordinatePoint *pCoordinate){
 }
 
 void CoordinateMeasurerTriangle::calcRad(){
-	coord.rad += (count.encoder0 + count.encoder1 + count.encoder2 - count.encoder0 - count.encoder1 - count.encoder2) * parameter.radiusOfMeasureWheel *M_PI * 2.0 / (parameter.attachmentRadius * parameter.encoderCPR * 3.0);
+	coordinate.rad += (count.encoder0 + count.encoder1 + count.encoder2 - count.encoder0 - count.encoder1 - count.encoder2) * parameter.radiusOfMeasureWheel *M_PI * 2.0 / (parameter.attachmentRadius * parameter.encoderCPR * 3.0);
 }
 
 void CoordinateMeasurerTriangle::calcPoint(){
