@@ -51,15 +51,11 @@ void CoordinateMeasurerLine::calcRad(){
 }
 
 void CoordinateMeasurerLine::calcPoint(){
-	float sin_value;
-	float cos_value;
-	float delta_y , delta_x;
+	float cos_value = std::cos(coordinate.rad);
+	float sin_value = std::sin(coordinate.rad);
 
-	cos_value = std::cos(coordinate.rad);
-	sin_value = std::sin(coordinate.rad);
-
-	delta_y = (count[0] + count[2] - befCount[0] - befCount[2]) / 2.0;
-	delta_x = count[1] - befCount[1];
+	float delta_y = (count[0] + count[2] - befCount[0] - befCount[2]) / 2.0;
+	float delta_x = count[1] - befCount[1];
 
     coordinate.x += convertCountToDistance(delta_x) * cos_value - convertCountToDistance(delta_y) * sin_value;
     coordinate.y += convertCountToDistance(delta_y) * cos_value + convertCountToDistance(delta_x) * sin_value;
@@ -84,15 +80,11 @@ void CoordinateMeasurerTriangle::calcRad(){
 }
 
 void CoordinateMeasurerTriangle::calcPoint(){
-	float sin_value;
-	float cos_value;
-	float delta_y , delta_x;
+	float sin_value = std::sin(coordinate.rad);
+	float cos_value = std::cos(coordinate.rad);
 
-	cos_value = std::cos(coordinate.rad);
-	sin_value = std::sin(coordinate.rad);
-
-	delta_y = (count[2] - befCount[2] - (count[1] - befCount[1])) * parameter.radiusOfMeasureWheel *M_PI * 2.0 / (sqrt(3.0) * parameter.encoderCPR);
-	delta_x = (count[1] + befCount[1] + count[2] - befCount[2] - 2 * (count[0] - befCount[0])) * parameter.radiusOfMeasureWheel *M_PI * 2.0 / (3.0 * parameter.encoderCPR);
+	float delta_y = (count[2] - befCount[2] - (count[1] - befCount[1])) * parameter.radiusOfMeasureWheel *M_PI * 2.0 / (sqrt(3.0) * parameter.encoderCPR);
+	float delta_x = (count[1] + befCount[1] + count[2] - befCount[2] - 2 * (count[0] - befCount[0])) * parameter.radiusOfMeasureWheel *M_PI * 2.0 / (3.0 * parameter.encoderCPR);
 
     coordinate.x += convertCountToDistance(delta_x) * cos_value - convertCountToDistance(delta_y) * sin_value;
     coordinate.y += convertCountToDistance(delta_y) * cos_value + convertCountToDistance(delta_x) * sin_value;
