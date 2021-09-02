@@ -23,7 +23,7 @@ public:
 	CoordinatePoint *getCoord();
 	void update();
 	virtual void offset(CoordinatePoint *pCoord) = 0;
-	void overwriteCoord(CoordinatePoint *pCoord);
+	void overwriteCoord(CoordinatePoint coordinate);
 
 private:
 	virtual void calcRad() = 0;

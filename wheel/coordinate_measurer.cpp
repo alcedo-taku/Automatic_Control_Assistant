@@ -22,8 +22,8 @@ void CoordinateMeasurer::update(){
 	calcPoint();
 }
 
-void CoordinateMeasurer::overwriteCoord(CoordinatePoint *pCoordinate){
-	coord = *pCoordinate;
+void CoordinateMeasurer::overwriteCoord(CoordinatePoint coordinate){
+	coord = coordinate;
 }
 
 float CoordinateMeasurer::convertCountToDistance(float deltaCount){
