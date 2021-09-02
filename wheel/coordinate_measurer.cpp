@@ -43,8 +43,11 @@ void CoordinateMeasurerLine::offset(CoordinatePoint *pCoordinate){
 }
 
 void CoordinateMeasurerLine::calcRad(){
-	if(count.encoder0 - count.encoder2)	coord.rad = offsetCoord.rad;
-	else coord.rad = (count.encoder0 - count.encoder2) * M_PI * parameter.attachmentRadius / (parameter.encoderCPR * parameter.attachmentRadius) + offsetCoord.rad;
+    if(count.encoder0 - count.encoder2)	{
+        coord.rad = offsetCoord.rad;
+    } else {
+        coord.rad = (count.encoder0 - count.encoder2) * M_PI * parameter.attachmentRadius / (parameter.encoderCPR * parameter.attachmentRadius) + offsetCoord.rad;
+    }
 }
 
 void CoordinateMeasurerLine::calcPoint(){
