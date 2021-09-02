@@ -7,17 +7,17 @@ CoordinateMeasurer::CoordinateMeasurer(uint16_t encoderPPR, uint16_t radiusOfMea
 	parameter.attachmentRadius = attachmentRadius;
 }
 
-void CoordinateMeasurer::setData(std::array<int32_t,3> *pEncoderCount){
+void CoordinateMeasurer::setData(const std::array<int32_t,3> &EncoderCount){
 	befCount = count;
-	count = *pEncoderCount;
+	count = EncoderCount;
 	for(uint8_t i; i<3; i++){
 		prev_distance[i] = distance[i];
-		distance[i] = 2.0 * M_PI * parameter.radiusOfMeasureWheel * (float)*pEncoderCount[i] / (float)parameter.encoderCPR;
+		distance[i] = 2.0 * M_PI * parameter.radiusOfMeasureWheel * (float)EncoderCount[i] / (float)parameter.encoderCPR;
 	}
 }
 
-CoordinatePoint *CoordinateMeasurer::get_coordinate(){
-	return &coordinate;
+const CoordinatePoint &CoordinateMeasurer::get_coordinate(){
+	return coordinate;
 }
 
 void CoordinateMeasurer::update(){

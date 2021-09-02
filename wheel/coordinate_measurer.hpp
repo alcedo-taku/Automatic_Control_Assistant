@@ -14,8 +14,8 @@ struct RobotParameter {
 class CoordinateMeasurer{
 public:
 	CoordinateMeasurer(uint16_t encoderPPR, uint16_t radiusOfMeasureWheel, uint16_t attachmentRadius);
-	void setData(std::array<int32_t,3> *pEncoderCount);
-	CoordinatePoint *get_coordinate();
+	void setData(const std::array<int32_t,3> &EncoderCount);
+	const CoordinatePoint &get_coordinate();
 	void update();
 	void overwriteCoord(CoordinatePoint coordinate);
 
@@ -32,6 +32,7 @@ protected:
 	std::array<int32_t,3> befCount;
 	std::array<float,3> distance;
 	std::array<float,3> prev_distance;
+//	std::array<float,3> micro_distance;
 	RobotParameter parameter;
 };
 
