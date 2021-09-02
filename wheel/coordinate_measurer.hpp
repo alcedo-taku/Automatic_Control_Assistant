@@ -19,7 +19,6 @@ struct RobotParameter {
 class CoordinateMeasurer{
 public:
 	CoordinateMeasurer(uint16_t encoderCPR, uint16_t radiusOfMeasureWheel, uint16_t attachmentRadius);
-	void init();
 	void setData(EncoderCount *pEncoderCount);
 	CoordinatePoint *getCoord();
 	void update();

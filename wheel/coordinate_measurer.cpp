@@ -10,10 +10,6 @@ CoordinateMeasurer::CoordinateMeasurer(uint16_t encoderCPR, uint16_t radiusOfMea
 CoordinateMeasurer::~CoordinateMeasurer() {
 }
 
-void CoordinateMeasurer::init(){
-	return;
-}
-
 void CoordinateMeasurer::setData(EncoderCount *pEncoderCount){
 	befCount = count;
 	count = *pEncoderCount;
