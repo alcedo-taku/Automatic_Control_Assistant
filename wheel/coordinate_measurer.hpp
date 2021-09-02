@@ -13,7 +13,7 @@ struct RobotParameter {
 
 class CoordinateMeasurer{
 public:
-	CoordinateMeasurer(uint16_t encoderCPR, uint16_t radiusOfMeasureWheel, uint16_t attachmentRadius);
+	CoordinateMeasurer(uint16_t encoderPPR, uint16_t radiusOfMeasureWheel, uint16_t attachmentRadius);
 	void setData(std::array<int32_t,3> *pEncoderCount);
 	CoordinatePoint *get_coordinate();
 	void update();
@@ -31,6 +31,8 @@ protected:
     CoordinatePoint offset_coordinate;
 	std::array<int32_t,3> count;
 	std::array<int32_t,3> befCount;
+	std::array<float,3> distance;
+	std::array<float,3> prev_distance;
 	RobotParameter parameter;
 };
 

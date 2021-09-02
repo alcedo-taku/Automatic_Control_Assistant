@@ -47,6 +47,7 @@ void CoordinateMeasurerLine::calcRad(){
         coordinate.rad = offset_coordinate.rad;
     } else {
         coordinate.rad = (count[0] - count[2]) * M_PI * parameter.attachmentRadius / (parameter.encoderCPR * parameter.attachmentRadius) + offset_coordinate.rad;
+        coordinate.rad = (distance[0] - distance[2]) / (2.0*M_PI);
     }
 }
 
@@ -76,7 +77,8 @@ void CoordinateMeasurerTriangle::offset(CoordinatePoint *pCoordinate){
 }
 
 void CoordinateMeasurerTriangle::calcRad(){
-	coordinate.rad += (count[0] + count[1] + count[2] - count[0] - count[1] - count[2]) * parameter.radiusOfMeasureWheel *M_PI * 2.0 / (parameter.attachmentRadius * parameter.encoderCPR * 3.0);
+//	coordinate.rad += (count[0] + count[1] + count[2] - count[0] - count[1] - count[2]) * parameter.radiusOfMeasureWheel *M_PI * 2.0 / (parameter.attachmentRadius * parameter.encoderCPR * 3.0);
+	coordinate.rad = ( distance[0] + distance[1] + distance[2] ) / ( 3 * parameter.attachmentRadius );
 }
 
 void CoordinateMeasurerTriangle::calcPoint(){
