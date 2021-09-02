@@ -7,7 +7,7 @@ CoordinateMeasurer::CoordinateMeasurer(uint16_t encoderCPR, uint16_t radiusOfMea
 	parameter.attachmentRadius = attachmentRadius;
 }
 
-void CoordinateMeasurer::setData(EncoderCount *pEncoderCount){
+void CoordinateMeasurer::setData(std::array<int32_t,3> *pEncoderCount){
 	befCount = count;
 	count = *pEncoderCount;
 	return;
@@ -43,10 +43,10 @@ void CoordinateMeasurerLine::offset(CoordinatePoint *pCoordinate){
 }
 
 void CoordinateMeasurerLine::calcRad(){
-    if(count.encoder0 - count.encoder2)	{
+    if(count[0] - count[2])	{
         coordinate.rad = offset_coordinate.rad;
     } else {
-        coordinate.rad = (count.encoder0 - count.encoder2) * M_PI * parameter.attachmentRadius / (parameter.encoderCPR * parameter.attachmentRadius) + offset_coordinate.rad;
+        coordinate.rad = (count[0] - count[2]) * M_PI * parameter.attachmentRadius / (parameter.encoderCPR * parameter.attachmentRadius) + offset_coordinate.rad;
     }
 }
 
@@ -58,8 +58,8 @@ void CoordinateMeasurerLine::calcPoint(){
 	cos_value = cos(coordinate.rad);
 	sin_value = sin(coordinate.rad);
 
-	delta_y = (count.encoder0 + count.encoder2 - befCount.encoder0 - befCount.encoder2) / 2.0;
-	delta_x = count.encoder1 - befCount.encoder1;
+	delta_y = (count[0] + count[2] - befCount[0] - befCount[2]) / 2.0;
+	delta_x = count[1] - befCount[1];
 
     coordinate.x += convertCountToDistance(delta_x) * cos_value - convertCountToDistance(delta_y) * sin_value;
     coordinate.y += convertCountToDistance(delta_y) * cos_value + convertCountToDistance(delta_x) * sin_value;
@@ -80,7 +80,7 @@ void CoordinateMeasurerTriangle::offset(CoordinatePoint *pCoordinate){
 }
 
 void CoordinateMeasurerTriangle::calcRad(){
-	coordinate.rad += (count.encoder0 + count.encoder1 + count.encoder2 - count.encoder0 - count.encoder1 - count.encoder2) * parameter.radiusOfMeasureWheel *M_PI * 2.0 / (parameter.attachmentRadius * parameter.encoderCPR * 3.0);
+	coordinate.rad += (count[0] + count[1] + count[2] - count[0] - count[1] - count[2]) * parameter.radiusOfMeasureWheel *M_PI * 2.0 / (parameter.attachmentRadius * parameter.encoderCPR * 3.0);
 }
 
 void CoordinateMeasurerTriangle::calcPoint(){
@@ -91,8 +91,8 @@ void CoordinateMeasurerTriangle::calcPoint(){
 	cos_value = cos(coordinate.rad);
 	sin_value = sin(coordinate.rad);
 
-	delta_y = (count.encoder2 - befCount.encoder2 - (count.encoder1 - befCount.encoder1)) * parameter.radiusOfMeasureWheel *M_PI * 2.0 / (sqrt(3.0) * parameter.encoderCPR);
-	delta_x = (count.encoder1 + befCount.encoder1 + count.encoder2 - befCount.encoder2 - 2 * (count.encoder0 - befCount.encoder0)) * parameter.radiusOfMeasureWheel *M_PI * 2.0 / (3.0 * parameter.encoderCPR);
+	delta_y = (count[2] - befCount[2] - (count[1] - befCount[1])) * parameter.radiusOfMeasureWheel *M_PI * 2.0 / (sqrt(3.0) * parameter.encoderCPR);
+	delta_x = (count[1] + befCount[1] + count[2] - befCount[2] - 2 * (count[0] - befCount[0])) * parameter.radiusOfMeasureWheel *M_PI * 2.0 / (3.0 * parameter.encoderCPR);
 
     coordinate.x += convertCountToDistance(delta_x) * cos_value - convertCountToDistance(delta_y) * sin_value;
     coordinate.y += convertCountToDistance(delta_y) * cos_value + convertCountToDistance(delta_x) * sin_value;

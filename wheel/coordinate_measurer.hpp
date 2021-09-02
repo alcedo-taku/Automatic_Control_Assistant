@@ -2,13 +2,8 @@
 #define COORDINATE_MEASURER_HPP_
 
 #include <cstdint>
+#include <array>
 #include "CoordinatePoint.hpp"
-
-struct EncoderCount {
-	int32_t encoder0;
-	int32_t encoder1;
-	int32_t encoder2;
-};
 
 struct RobotParameter {
 	uint16_t encoderCPR; // encoder count per revolution
@@ -19,7 +14,7 @@ struct RobotParameter {
 class CoordinateMeasurer{
 public:
 	CoordinateMeasurer(uint16_t encoderCPR, uint16_t radiusOfMeasureWheel, uint16_t attachmentRadius);
-	void setData(EncoderCount *pEncoderCount);
+	void setData(std::array<int32_t,3> *pEncoderCount);
 	CoordinatePoint *get_coordinate();
 	void update();
 	virtual void offset(CoordinatePoint *pCoord) = 0;
@@ -34,8 +29,8 @@ protected:
 
 	CoordinatePoint coordinate;
     CoordinatePoint offset_coordinate;
-	EncoderCount count;
-	EncoderCount befCount;
+	std::array<int32_t,3> count;
+	std::array<int32_t,3> befCount;
 	RobotParameter parameter;
 };
 
