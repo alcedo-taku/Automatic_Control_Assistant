@@ -17,7 +17,6 @@ public:
 	void setData(std::array<int32_t,3> *pEncoderCount);
 	CoordinatePoint *get_coordinate();
 	void update();
-	virtual void offset(CoordinatePoint *pCoord) = 0;
 	void overwriteCoord(CoordinatePoint coordinate);
 
 private:
@@ -39,7 +38,6 @@ protected:
 class CoordinateMeasurerLine : public CoordinateMeasurer{
 public:
 	CoordinateMeasurerLine(uint16_t encoderPPR, uint16_t radiusOfMeasureWheel, uint16_t attachmentRadius);
-	void offset(CoordinatePoint *pCoord) override;
 private:
 	void calcRad() override;
 	void calcPoint() override;
@@ -48,7 +46,6 @@ private:
 class CoordinateMeasurerTriangle : public CoordinateMeasurer{
 public:
 	CoordinateMeasurerTriangle(uint16_t encoderPPR, uint16_t radiusOfMeasureWheel, uint16_t attachmentRadius);
-	void offset(CoordinatePoint *pCoord) override;
 private:
 	void calcRad() override;
 	void calcPoint() override;

@@ -1,8 +1,8 @@
 #include "coordinate_measurer.hpp"
 #include <cmath>
 
-CoordinateMeasurer::CoordinateMeasurer(uint16_t encoderCPR, uint16_t radiusOfMeasureWheel, uint16_t attachmentRadius){
-	parameter.encoderCPR = encoderCPR * 4;
+CoordinateMeasurer::CoordinateMeasurer(uint16_t encoderPPR, uint16_t radiusOfMeasureWheel, uint16_t attachmentRadius){
+	parameter.encoderCPR = encoderPPR * 4;
 	parameter.radiusOfMeasureWheel = radiusOfMeasureWheel;
 	parameter.attachmentRadius = attachmentRadius;
 }
@@ -10,7 +10,10 @@ CoordinateMeasurer::CoordinateMeasurer(uint16_t encoderCPR, uint16_t radiusOfMea
 void CoordinateMeasurer::setData(std::array<int32_t,3> *pEncoderCount){
 	befCount = count;
 	count = *pEncoderCount;
-	return;
+	for(uint8_t i; i<3; i++){
+		prev_distance[i] = distance[i];
+		distance[i] = 2.0 * M_PI * parameter.radiusOfMeasureWheel * (float)*pEncoderCount[i] / (float)parameter.encoderCPR;
+	}
 }
 
 CoordinatePoint *CoordinateMeasurer::get_coordinate(){
@@ -27,27 +30,26 @@ void CoordinateMeasurer::overwriteCoord(CoordinatePoint coordinate){
 }
 
 float CoordinateMeasurer::convertCountToDistance(float deltaCount){
-	return deltaCount * parameter.radiusOfMeasureWheel *M_PI * 2.0 / (float)parameter.encoderCPR;
+	return deltaCount * parameter.radiusOfMeasureWheel * M_PI * 2.0 / (float)parameter.encoderCPR;
 }
 
 /*****************
  * CoordinateMeasurerLine
  ******************/
 
-CoordinateMeasurerLine::CoordinateMeasurerLine(uint16_t encoderPPR, uint16_t radiusOfMeasureWheel, uint16_t attachmentRadius) : CoordinateMeasurer(encoderPPR, radiusOfMeasureWheel, attachmentRadius){
-
-}
-
-void CoordinateMeasurerLine::offset(CoordinatePoint *pCoordinate){
-	offset_coordinate = *pCoordinate;
+CoordinateMeasurerLine::CoordinateMeasurerLine(
+	uint16_t encoderPPR, uint16_t radiusOfMeasureWheel, uint16_t attachmentRadius
+):
+	CoordinateMeasurer(encoderPPR, radiusOfMeasureWheel, attachmentRadius)
+{
 }
 
 void CoordinateMeasurerLine::calcRad(){
     if(count[0] - count[2])	{
         coordinate.rad = offset_coordinate.rad;
     } else {
-        coordinate.rad = (count[0] - count[2]) * M_PI * parameter.attachmentRadius / (parameter.encoderCPR * parameter.attachmentRadius) + offset_coordinate.rad;
-        coordinate.rad = (distance[0] - distance[2]) / (2.0*M_PI);
+//        coordinate.rad = (count[0] - count[2]) * M_PI * parameter.attachmentRadius / (parameter.encoderCPR * parameter.attachmentRadius) + offset_coordinate.rad;
+        coordinate.rad = (distance[0] - distance[2]) / (2.0*parameter.attachmentRadius);
     }
 }
 
@@ -67,13 +69,11 @@ void CoordinateMeasurerLine::calcPoint(){
  * CoordinateMeasurerTriangle
  ********************/
 
-CoordinateMeasurerTriangle::CoordinateMeasurerTriangle(uint16_t encoderPPR, uint16_t radiusOfMeasureWheel, uint16_t attachmentRadius) : CoordinateMeasurer(encoderPPR, radiusOfMeasureWheel, attachmentRadius){
-
-}
-
-void CoordinateMeasurerTriangle::offset(CoordinatePoint *pCoordinate){
-    coordinate = coordinate + *pCoordinate - offset_coordinate;
-	offset_coordinate = *pCoordinate;
+CoordinateMeasurerTriangle::CoordinateMeasurerTriangle(
+	uint16_t encoderPPR, uint16_t radiusOfMeasureWheel, uint16_t attachmentRadius
+):
+	CoordinateMeasurer(encoderPPR, radiusOfMeasureWheel, attachmentRadius)
+{
 }
 
 void CoordinateMeasurerTriangle::calcRad(){
