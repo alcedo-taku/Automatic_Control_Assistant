@@ -7,9 +7,6 @@ CoordinateMeasurer::CoordinateMeasurer(uint16_t encoderCPR, uint16_t radiusOfMea
 	parameter.attachmentRadius = attachmentRadius;
 }
 
-CoordinateMeasurer::~CoordinateMeasurer() {
-}
-
 void CoordinateMeasurer::setData(EncoderCount *pEncoderCount){
 	befCount = count;
 	count = *pEncoderCount;
