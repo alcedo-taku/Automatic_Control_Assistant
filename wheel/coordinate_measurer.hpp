@@ -16,25 +16,18 @@ struct RobotParameter {
 class CoordinateMeasurer{
 public:
 	CoordinateMeasurer(uint16_t encoderPPR, uint16_t radiusOfMeasureWheel, uint16_t attachmentRadius);
-	void setData(const std::array<int32_t,3> &EncoderCount);
+	void update(const std::array<int32_t,3> &EncoderCount);
 	const Coordinate<float> &get_coordinate();
-	void update();
-	void overwriteCoord(Coordinate<float> coordinate);
+	void overwriteCoordinate(Coordinate<float> coordinate);
 
 private:
-	virtual void calcRad() = 0;
-	virtual void calcPoint() = 0;
+	virtual float calcAngle(std::array<float,3> distance) = 0;
+	virtual Coordinate<float> convert_to_robot(std::array<float,3> distance) = 0;
+	Coordinate<float> convert_to_field(Coordinate<float> micro_distance);
 
 protected:
-	float convertCountToDistance(float deltaCount);
-
-	Coordinate<float> coordinate;
-    Coordinate<float> offset_coordinate;
-	std::array<int32_t,3> count;
-	std::array<int32_t,3> befCount;
-	std::array<float,3> distance;
-	std::array<float,3> prev_distance;
-//	std::array<float,3> micro_distance;
+	Coordinate<float> coordinate; // field_coordinate
+	float offset_angle;
 	RobotParameter parameter;
 };
 
@@ -42,16 +35,16 @@ class CoordinateMeasurerLine : public CoordinateMeasurer{
 public:
 	CoordinateMeasurerLine(uint16_t encoderPPR, uint16_t radiusOfMeasureWheel, uint16_t attachmentRadius);
 private:
-	void calcRad() override;
-	void calcPoint() override;
+	float calcAngle(std::array<float,3> distance) override;
+	Coordinate<float> convert_to_robot(std::array<float,3> distance) override;
 };
 
 class CoordinateMeasurerTriangle : public CoordinateMeasurer{
 public:
 	CoordinateMeasurerTriangle(uint16_t encoderPPR, uint16_t radiusOfMeasureWheel, uint16_t attachmentRadius);
 private:
-	void calcRad() override;
-	void calcPoint() override;
+	float calcAngle(std::array<float,3> distance) override;
+	Coordinate<float> convert_to_robot(std::array<float,3> distance) override;
 };
 
 }; // namespace aca
