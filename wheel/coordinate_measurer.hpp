@@ -20,7 +20,7 @@ class CoordinateMeasurer{
 public:
 	CoordinateMeasurer(uint16_t encoderCPR, uint16_t radiusOfMeasureWheel, uint16_t attachmentRadius);
 	void setData(EncoderCount *pEncoderCount);
-	CoordinatePoint *getCoord();
+	CoordinatePoint *get_coordinate();
 	void update();
 	virtual void offset(CoordinatePoint *pCoord) = 0;
 	void overwriteCoord(CoordinatePoint coordinate);
@@ -32,8 +32,8 @@ private:
 protected:
 	float convertCountToDistance(float deltaCount);
 
-	CoordinatePoint coord;
-    CoordinatePoint offsetCoord;
+	CoordinatePoint coordinate;
+    CoordinatePoint offset_coordinate;
 	EncoderCount count;
 	EncoderCount befCount;
 	RobotParameter parameter;
