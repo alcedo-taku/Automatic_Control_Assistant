@@ -24,7 +24,7 @@ Coordinate<float> CoordinateMeasurer::convert_to_field(Coordinate<float> micro_d
 
 void CoordinateMeasurer::update(const std::array<int32_t,3> &EncoderCount){
 	std::array<float,3> distance;
-	for(uint8_t i; i<3; i++){
+	for(uint8_t i = 0; i < 3; i++){
 		distance[i] = 2.0 * M_PI * parameter.radiusOfMeasureWheel * (float)EncoderCount[i] / (float)parameter.encoderCPR;
 	}
 	coordinate.angle = calcAngle(distance) - offset_angle;
