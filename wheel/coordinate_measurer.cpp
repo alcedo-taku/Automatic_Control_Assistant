@@ -3,6 +3,10 @@
 
 namespace aca{
 
+/*
+ * CoordinateMeasurer
+ */
+
 CoordinateMeasurer::CoordinateMeasurer(uint16_t encoderPPR, uint16_t radiusOfMeasureWheel, uint16_t attachmentRadius){
 	parameter.encoderCPR = encoderPPR * 4;
 	parameter.radiusOfMeasureWheel = radiusOfMeasureWheel;
@@ -41,9 +45,9 @@ void CoordinateMeasurer::overwriteCoordinate(Coordinate<float> coordinate){
 }
 
 
-/*****************
+/*
  * CoordinateMeasurerLine
- ******************/
+ */
 
 CoordinateMeasurerLine::CoordinateMeasurerLine(
 	uint16_t encoderPPR, uint16_t radiusOfMeasureWheel, uint16_t attachmentRadius
@@ -66,9 +70,9 @@ float CoordinateMeasurerLine::calcAngle(std::array<float,3> distance){
 }
 
 
-/********************
+/*
  * CoordinateMeasurerTriangle
- ********************/
+ */
 
 CoordinateMeasurerTriangle::CoordinateMeasurerTriangle(
 	uint16_t encoderPPR, uint16_t radiusOfMeasureWheel, uint16_t attachmentRadius
