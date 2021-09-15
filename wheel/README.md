@@ -1,5 +1,6 @@
 # Wheel
 
 ## クラス
-- [OmniWheelController](omni_wheel_controller/README.md)
-- [MecanumWheelController](mecanum_wheel_controller/README.md)
+- [WheelController](wheel_controller/README.md)
+  - [OmniWheelController](wheel_controller/README.md/#OmniWheelController)
+  - [MecanumWheelController](wheel_controller/README.md/#MecanumWheelController)
