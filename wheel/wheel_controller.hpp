@@ -26,8 +26,10 @@ private:
      */
     Coordinate<float> rotation_matrix(Coordinate<float> field_velocity, float angle){
         Coordinate<float> robot_velocity;
-        robot_velocity.x =  field_velocity.x * std::cos(angle) + field_velocity.y * std::sin(angle);
-        robot_velocity.y = -field_velocity.x * std::sin(angle) + field_velocity.y * std::cos(angle);
+    	float cos_value = std::cos(angle);
+    	float sin_value = std::sin(angle);
+        robot_velocity.x =  field_velocity.x * cos_value + field_velocity.y * sin_value;
+        robot_velocity.y = -field_velocity.x * sin_value + field_velocity.y * cos_value;
         robot_velocity.angle = field_velocity.angle;
         return robot_velocity;
     };
