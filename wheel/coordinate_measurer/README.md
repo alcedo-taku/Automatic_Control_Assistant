@@ -2,6 +2,7 @@
 
 自己位置推定のためのライブラリ
 
+
 ## 計測輪の配置
 ![計測輪配置の図](measuring_wheel_arrangement.png "計測輪配置")
 数字：計測輪の番号  
@@ -14,7 +15,7 @@
 ### コンストラクタ
 引数：PPR, 計測輪半径, 取付半径
 ```C++
-aca::CoordinateMeasurer coordinate_measurer(1000, 30, 270);
+aca::CoordinateMeasurerLine coordinate_measurer(1000, 30, 270);
 ```
 
 ### 座標の更新と取得
