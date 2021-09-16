@@ -24,7 +24,7 @@ private:
      * @param angle ロボットの角度
      * @return ロボット座標
      */
-    Coordinate<float> rotation_matrix(Coordinate<float> field_velocity, float angle){
+    Coordinate<float> convert_to_robot_velocity(Coordinate<float> field_velocity, float angle){
         Coordinate<float> robot_velocity;
     	float cos_value = std::cos(angle);
     	float sin_value = std::sin(angle);
@@ -48,7 +48,7 @@ public:
      * @param angle ロボットの角度
      */
     void update(Coordinate<float> field_velocity, float angle){
-        convert_each_wheel( rotation_matrix(field_velocity, angle) );
+        convert_each_wheel( convert_to_robot_velocity(field_velocity, angle) );
     };
 
     /**
