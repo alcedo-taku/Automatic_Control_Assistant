@@ -16,11 +16,18 @@ void TargetBasedOnTime::set(float targetPosition, float initialPosition, float m
     this->targetPosition = targetPosition;
     this->initialPosition = initialPosition;
 
-    if (maxVelocity < firstVelocity)
+    // 初期速度、最終速度の絶対値が最高速度より大きかったら、最高速度の範囲内に収まるように変更する
+    if (maxVelocity < firstVelocity){
         firstVelocity = maxVelocity;
+    }else if (firstVelocity < -maxVelocity){
+        firstVelocity = -maxVelocity;
+    }
     this->firstVelocity = firstVelocity;
-    if (maxVelocity < finalVelocity)
+    if (maxVelocity < finalVelocity){
         finalVelocity = maxVelocity;
+    }else if (finalVelocity < -maxVelocity){
+        finalVelocity = -maxVelocity;
+    }
     this->finalVelocity = finalVelocity;
 
     targetPositionDistance = std::abs(targetPosition-initialPosition);
