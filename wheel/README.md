@@ -4,6 +4,9 @@
 - [WheelController](wheel_controller/README.md)
   - [OmniWheelController](wheel_controller/README.md/#OmniWheelController)
   - [MecanumWheelController](wheel_controller/README.md/#MecanumWheelController)
+- [CoordinateMeasurer](coordinate_measurer/README.md)
+  - CoordinateMeasurerLine
+  - CoordinateMeasurerTriangle
 
 ## 理解するのに必要な知識
 （使う分には知らなくても問題ない）
