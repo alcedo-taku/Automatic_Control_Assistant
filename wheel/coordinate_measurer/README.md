@@ -17,7 +17,7 @@
 ### コンストラクタ
 引数：PPR, 計測輪半径, 取付半径
 ```C++
-aca::CoordinateMeasurerLine coordinate_measurer(1000, 30, 270);
+aca::CoordinateMeasurerTriangle coordinate_measurer(1000, 30, 270);
 ```
 
 ### 座標の更新と取得
