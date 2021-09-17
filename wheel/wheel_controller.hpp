@@ -10,12 +10,12 @@ namespace aca {
 /**
  * @brief 駆動を制御するためのクラス
  * @tparam NUMBER_OF_WHEELS 駆動輪の数
- * @tparam OUTPUT_TYPE 出力するデータの型
+ * @tparam WHEEL_VELOCITY_TYPE 出力するデータの型
  */
-template <std::size_t NUMBER_OF_WHEELS, typename OUTPUT_TYPE>
+template <std::size_t NUMBER_OF_WHEELS, typename WHEEL_VELOCITY_TYPE>
 class WheelController{
 protected:
-    std::array<OUTPUT_TYPE, NUMBER_OF_WHEELS> wheel_velocity;
+    std::array<WHEEL_VELOCITY_TYPE, NUMBER_OF_WHEELS> wheel_velocity;
 
 private:
     /**
@@ -67,7 +67,7 @@ public:
 	 * @brief 各駆動輪の速度を取得するための関数
      * @return 各駆動輪の速度を保持したarray配列
      */
-    std::array<OUTPUT_TYPE, NUMBER_OF_WHEELS> get_wheel_velocity(){
+    std::array<WHEEL_VELOCITY_TYPE, NUMBER_OF_WHEELS> get_wheel_velocity(){
         return wheel_velocity;
     };
 
@@ -76,7 +76,7 @@ public:
      * @param wheel_number 駆動輪の番号
      * @return 指定した駆動輪の速度
      */
-    OUTPUT_TYPE get_wheel_velocity(uint8_t wheel_number){
+    WHEEL_VELOCITY_TYPE get_wheel_velocity(uint8_t wheel_number){
         return wheel_velocity[wheel_number];
     };
 };
@@ -111,10 +111,10 @@ struct Coefficient{
 /**
  * @brief オムニホイール駆動のため、WheelController を継承したクラス
  * @tparam NUMBER_OF_WHEELS オムニホイールの数
- * @tparam OUTPUT_TYPE 各オムニホイールの速度の型
+ * @tparam WHEEL_VELOCITY_TYPE 各オムニホイールの速度の型
  */
-template <std::size_t NUMBER_OF_WHEELS, typename OUTPUT_TYPE>
-class OmniWheelController : public WheelController<NUMBER_OF_WHEELS, OUTPUT_TYPE>{
+template <std::size_t NUMBER_OF_WHEELS, typename WHEEL_VELOCITY_TYPE>
+class OmniWheelController : public WheelController<NUMBER_OF_WHEELS, WHEEL_VELOCITY_TYPE>{
 private:
     std::array<Coefficient, NUMBER_OF_WHEELS> coefficient;
     void convert_each_wheel(Coordinate<float> robot_velocity) override {
@@ -144,10 +144,10 @@ public:
 
 /**
  * @brief メカナムホイール駆動のため、WheelController を継承したクラス
- * @tparam OUTPUT_TYPE　各メカナムホイールの速度の型
+ * @tparam WHEEL_VELOCITY_TYPE　各メカナムホイールの速度の型
  */
-template <typename OUTPUT_TYPE>
-class MecanumWheelController : public WheelController<4, OUTPUT_TYPE> {
+template <typename WHEEL_VELOCITY_TYPE>
+class MecanumWheelController : public WheelController<4, WHEEL_VELOCITY_TYPE> {
 private:
     float a,b;
 	void convert_each_wheel(Coordinate<float> robot_velocity) override {

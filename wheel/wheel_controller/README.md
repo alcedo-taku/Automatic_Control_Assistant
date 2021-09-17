@@ -70,11 +70,11 @@ for(uint8_t i=0; i++; i<4;){
 
 ## クラステンプレート
 ```c++
-template <std::size_t NUMBER_OF_WHEELS, typename OUTPUT_TYPE>
+template <std::size_t NUMBER_OF_WHEELS, typename WHEEL_VELOCITY_TYPE>
 ```
 ```yaml
 NUMBER_OF_OMNI_WHEELS: ホイールの数
-OUTPUT_TYPE: 各ホイールの速度の型
+WHEEL_VELOCITY_TYPE: 各ホイールの速度の型
 ```
 
 ## 関数
@@ -111,7 +111,7 @@ OUTPUT_TYPE: 各ホイールの速度の型
 
 ##### WheelController::get_wheel_velocity()
 > ```c++
-> std::array<OUTPUT_TYPE, NUMBER_OF_OMNI_WHEELS> get_wheel_velocity()
+> std::array<WHEEL_VELOCITY_TYPE, NUMBER_OF_OMNI_WHEELS> get_wheel_velocity()
 > ```
 > 各ホイールの速度を保持したarray配列を返します。
 > ```c++
@@ -122,7 +122,7 @@ OUTPUT_TYPE: 各ホイールの速度の型
 
 ##### WheelController::get_wheel_velocity(uint8_t)
 > ```c++
-> OUTPUT_TYPE get_wheel_velocity(uint8_t wheel_number)
+> WHEEL_VELOCITY_TYPE get_wheel_velocity(uint8_t wheel_number)
 > ```
 > 指定したホイールの速度を返します。
 > ```c++
@@ -137,11 +137,11 @@ OUTPUT_TYPE: 各ホイールの速度の型
 
 ## クラステンプレート
 ```c++
-template <std::size_t NUMBER_OF_OMNI_WHEELS, typename OUTPUT_TYPE>
+template <std::size_t NUMBER_OF_OMNI_WHEELS, typename WHEEL_VELOCITY_TYPE>
 ```
 ```yaml
 NUMBER_OF_OMNI_WHEELS: オムニホイールの数
-OUTPUT_TYPE: 各オムニホイールの速度の型
+WHEEL_VELOCITY_TYPE: 各オムニホイールの速度の型
 ```
 
 ## コンストラクタ
@@ -173,10 +173,10 @@ OUTPUT_TYPE: 各オムニホイールの速度の型
 
 ## クラステンプレート
 ```c++
-template <typename OUTPUT_TYPE>
+template <typename WHEEL_VELOCITY_TYPE>
 ```
 ```yaml
-OUTPUT_TYPE: 各メカナムホイールの速度の型
+WHEEL_VELOCITY_TYPE: 各メカナムホイールの速度の型
 ```
 
 ## コンストラクタ
