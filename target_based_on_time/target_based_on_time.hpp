@@ -2,6 +2,7 @@
 #define AUTOMATIC_CONTROL_ASSISTANT_TARGET_BASED_ON_TIME
 
 #include <cmath>
+#include <cfloat>
 #include <cstdint>
 
 namespace aca {

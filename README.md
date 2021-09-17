@@ -1,4 +1,4 @@
-# Automatic_Control_Assistant - 3.1.0
+# Automatic_Control_Assistant - 3.2.0
 ```c++
 #include "Automatic_Control_Assistant.hpp"
 ```
@@ -8,6 +8,10 @@ namespace aca
 ```
 
 ## 目次
-- [OmniWheelController](omni_wheel_controller/README.md)
+- [Wheel](wheel/README.md)
+  - [OmniWheelController](wheel/omni_wheel_controller/README.md)
 - [TargetBasedOnTime](target_based_on_time/README.md)
 - [PID_Controller](pid_controller/README.md)
+
+## 設計思想
+- HALライブラリの環境に依存しない
