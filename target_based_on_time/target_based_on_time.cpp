@@ -7,42 +7,40 @@ TargetBasedOnTime::TargetBasedOnTime(){
 }
 
 void TargetBasedOnTime::set(float targetPosition, float initialPosition, float maxAcceleration, float maxVelocity, float firstVelocity, float finalVelocity){
-    if (targetPosition != this->targetPosition || maxAcceleration != this->maxAcceleration || maxVelocity != this->maxVelocity){
-        // 最大加速度、最大速度を設定（負の数は正の数に直す　0の場合は処理終了）
-        this->maxAcceleration = maxAcceleration = std::abs(maxAcceleration);
-        this->maxVelocity = maxVelocity = std::abs(maxVelocity);
-        if (maxVelocity == 0.0 || maxAcceleration == 0.0)
-            return;
+    // 最大加速度、最大速度を設定（負の数は正の数に直す　0の場合は処理終了）
+    this->maxAcceleration = maxAcceleration = std::abs(maxAcceleration);
+    this->maxVelocity = maxVelocity = std::abs(maxVelocity);
+    if (maxVelocity == 0.0 || maxAcceleration == 0.0)
+        return;
 
-        this->targetPosition = targetPosition;
-        this->initialPosition = initialPosition;
+    this->targetPosition = targetPosition;
+    this->initialPosition = initialPosition;
 
-        if (maxVelocity < firstVelocity)
-            firstVelocity = maxVelocity;
-        this->firstVelocity = firstVelocity;
-        if (maxVelocity < finalVelocity)
-            finalVelocity = maxVelocity;
-        this->finalVelocity = finalVelocity;
+    if (maxVelocity < firstVelocity)
+        firstVelocity = maxVelocity;
+    this->firstVelocity = firstVelocity;
+    if (maxVelocity < finalVelocity)
+        finalVelocity = maxVelocity;
+    this->finalVelocity = finalVelocity;
 
-        targetPositionDistance = std::abs(targetPosition-initialPosition);
+    targetPositionDistance = std::abs(targetPosition-initialPosition);
 
-        //加速しきれる最小距離の計算
-        borderDistance = M_PI/(4*maxAcceleration) * ( 2*pow2(maxVelocity) - pow2(firstVelocity) - pow2(finalVelocity) );
+    //加速しきれる最小距離の計算
+    borderDistance = M_PI/(4*maxAcceleration) * ( 2*pow2(maxVelocity) - pow2(firstVelocity) - pow2(finalVelocity) );
 
-        //最高速度の計算
-        if (targetPositionDistance < borderDistance){
-            maxVelocityThisTime = sqrtf(2*targetPositionDistance*maxAcceleration/M_PI + pow2(firstVelocity)/2 + pow2(finalVelocity)/2 );
-        }else {
-            maxVelocityThisTime = maxVelocity;
-        }
+    //最高速度の計算
+    if (targetPositionDistance < borderDistance){
+        maxVelocityThisTime = sqrtf(2*targetPositionDistance*maxAcceleration/M_PI + pow2(firstVelocity)/2 + pow2(finalVelocity)/2 );
+    }else {
+        maxVelocityThisTime = maxVelocity;
+    }
 
-        //加速時間、等速時間、減速時間の計算
-        periodOfAcceleration = (maxVelocityThisTime-firstVelocity)*M_PI/(2*maxAcceleration);
-        periodOfDeceleration = (maxVelocityThisTime-finalVelocity)*M_PI/(2*maxAcceleration);
-        periodOfConstantVelocity = 0;
-        if (borderDistance < targetPositionDistance) {
-            periodOfConstantVelocity = (targetPositionDistance-borderDistance)/maxVelocityThisTime;
-        }
+    //加速時間、等速時間、減速時間の計算
+    periodOfAcceleration = (maxVelocityThisTime-firstVelocity)*M_PI/(2*maxAcceleration);
+    periodOfDeceleration = (maxVelocityThisTime-finalVelocity)*M_PI/(2*maxAcceleration);
+    periodOfConstantVelocity = 0;
+    if (borderDistance < targetPositionDistance) {
+        periodOfConstantVelocity = (targetPositionDistance-borderDistance)/maxVelocityThisTime;
     }
 }
 
