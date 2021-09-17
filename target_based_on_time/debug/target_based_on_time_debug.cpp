@@ -29,7 +29,7 @@ int main(void){
     //データ作成//
     float initialPosition = 1000.0f;
     aca::TargetBasedOnTime test;
-    test.set(500.0f, initialPosition,0.2f,10.0f, 5.0f, 1.0f);
+    test.set(500.0f, initialPosition,0.2f,10.0f, -15.0f, 1.0f);
 
 //    dot a[NX];
 //    float dx = test.getTimeRequired()/(float)NX;
