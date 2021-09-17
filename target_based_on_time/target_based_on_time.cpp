@@ -22,13 +22,20 @@ void TargetBasedOnTime::set(float targetPosition, float initialPosition, float m
     }else if (firstVelocity < -maxVelocity){
         firstVelocity = -maxVelocity;
     }
-    this->firstVelocity = firstVelocity;
     if (maxVelocity < finalVelocity){
         finalVelocity = maxVelocity;
     }else if (finalVelocity < -maxVelocity){
         finalVelocity = -maxVelocity;
     }
+
+    // 処理方法の都合上、初期位置が目標位置より大きかったら、初期速度と最終速度の符号を入れ替える
+    if (targetPosition < initialPosition){
+        firstVelocity = -firstVelocity;
+        finalVelocity = -finalVelocity;
+    }
+
     this->finalVelocity = finalVelocity;
+    this->firstVelocity = firstVelocity;
 
     targetPositionDistance = std::abs(targetPosition-initialPosition);
 
