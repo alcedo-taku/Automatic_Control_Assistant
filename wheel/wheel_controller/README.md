@@ -2,6 +2,54 @@
 
 駆動のための、x,y,回転方向の速度を各ホイールの速度に変換するためのライブラリ
 
+## 駆動輪の配置
+サンプルプログラムの配置
+![駆動輪配置の図](drive_wheel_position.png "駆動輪配置")
+ピンクの数字：駆動輪の番号  
+矢印：正の方向  
+
+## サンプルプログラム
+詳細は [wheel_controller.hpp](..\wheel_controller.hpp) に書いてあるので、参照すること。
+
+### コンストラクタ（オムニホイール）
+```c++
+constexpr robot_radius = 850;
+aca::OmniWheelController<4, int16_t> omni_wheel_controller(
+  std::array<MechanicParameter, 4>{
+  	aca::MechanicParameter{ 3.0/4.0*M_PI, robot_radius},
+  	aca::MechanicParameter{-3.0/4.0*M_PI, robot_radius},
+  	aca::MechanicParameter{-1.0/4.0*M_PI, robot_radius},
+  	aca::MechanicParameter{ 1.0/4.0*M_PI, robot_radius}
+  }
+);
+```
+
+### コンストラクタ（メカナムホイール）
+```C++
+aca::MecanumWheelController<int16_t> omni_wheel_controller(270, 350);
+```
+
+### 更新と取得
+オムニホイールの場合でやるが、メカナムホイールの場合も同様
+```c++
+// 更新方法1
+aca::field_velocity = {field_velocity_x, field_velocity_y, angular_velocity};
+omniWheelController.update(field_velocity, angle);
+// 更新方法2
+omniWheelController.update(field_velocity_x, field_velocity_y, angular_velocity, angle);
+
+// 取得方法1
+std::array<int16_t,4> wheel_velocity;
+wheel_velocity = omniWheelController.get_wheel_velocity();
+// 取得方法2（非推奨）
+std::array<int16_t,4> wheel_velocity;
+for(uint8_t i=0; i++; i<4;){
+  wheel_velocity[i] = omniWheelController.get_wheel_velocity(i);
+}
+```
+
+
+
 ## 目次
 - [WheelController](#wheelcontroller)
   - [目次](#目次)
@@ -68,6 +116,7 @@ OUTPUT_TYPE: 各ホイールの速度の型
 > 各ホイールの速度を保持したarray配列を返します。
 > ```c++
 > // 例
+> std::array<float,4> wheel_velocity;
 > omniWheelController.get_wheel_velocity();
 > ```
 
