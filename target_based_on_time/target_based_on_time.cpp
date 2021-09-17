@@ -7,10 +7,10 @@ TargetBasedOnTime::TargetBasedOnTime(){
 }
 
 void TargetBasedOnTime::set(float targetPosition, float initialPosition, float maxAcceleration, float maxVelocity, float firstVelocity, float finalVelocity){
-    // 最大加速度、最大速度を設定（負の数は正の数に直す　0の場合は処理終了）
+    // 最大加速度、最大速度を設定（負の数は正の数に直す）
     this->maxAcceleration = maxAcceleration = std::abs(maxAcceleration);
     this->maxVelocity = maxVelocity = std::abs(maxVelocity);
-    if (maxVelocity == 0.0 || maxAcceleration == 0.0)
+    if (std::abs(targetPosition - initialPosition) <= FLT_EPSILON || maxAcceleration <= FLT_EPSILON || maxVelocity <= FLT_EPSILON) // 目標位置までの距離、最高加速度、最高速度 のいずれかが0(floatの誤差幅以下)の時
         return;
 
     this->targetPosition = targetPosition;
