@@ -1,5 +1,21 @@
 # 変更履歴
 
+## v3.2.0
+- クラスを追加
+  - `CoordinateMeasurer`
+    - `CoordinateMeasurerLine`
+    - `CoordinateMeasurerTriangle`
+  - `WheelController`
+    - (`OmniWheelController`)(既存のクラスを`WheelController`の派生クラスにした)
+    - `MecanumWheelController`
+- ドキュメント
+  - 理解するのに必要な知識 を追加
+  - 設計思想 を追加
+- TargetBasedOnTime
+  - 目標位置と現在位置の差が0の時、NaNを出力するバグを修正
+  - 初期速度、最終速度が負の方向に最高速度より大きかったとき、訂正しないバグを修正
+  - 初期位置が目標位置より大きいとき、初期速度と最終速度の正負が入れ替わるバグを修正
+
 ## v3.1.0
 - OmniWheelController
   - 各ホイールの情報を個別に指定できるようにした
