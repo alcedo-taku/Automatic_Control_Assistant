@@ -22,7 +22,9 @@ PID_controller::PID_controller(
 {
 }
 
-PID_controller::PID_controller(const PID_Element &pid_parameter):
+PID_controller::PID_controller(
+	const PID_Element &pid_parameter
+):
     PID_controller(pid_parameter, 0)
 {
 }
@@ -36,8 +38,10 @@ PID_controller::PID_controller(
 {
 }
 
-PID_controller::PID_controller(const float frequency):
-    PID_controller(PID_Element{0, 0, 0}, 0)
+PID_controller::PID_controller(
+	const float frequency
+):
+    PID_controller(PID_Element{0, 0, 0}, frequency)
 {
 }
 
