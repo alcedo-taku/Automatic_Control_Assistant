@@ -69,20 +69,27 @@ void PID_controller::init(const float frequency){
 
 
 void PID_controller::updateOperation(const float difference){
+	last_operation_value = operation_value;
 	operation.proportional = difference;
 	operation.integral += (last_difference + difference) / 2 / frequency;
 	operation.differential = (difference - last_difference)*frequency;
+	operation_value = operation.proportional * pid_parameter.proportional
+					 + operation.integral * pid_parameter.integral
+					 + operation.differential * pid_parameter.differential;
 	last_difference = difference;
 }
 
 void PID_controller::resetIntegral(){
+	last_operation_value -= operation.integral * pid_parameter.integral;
 	operation.integral = 0;
 }
 
 float PID_controller::getOperation(){
-	return operation.proportional * pid_parameter.proportional
-		 + operation.integral * pid_parameter.integral
-		 + operation.differential * pid_parameter.differential;
+	return operation_value;
+}
+
+float PID_controller::getOperationDifference(){
+	return operation_value - last_operation_value;
 }
 
 } // namespace aca

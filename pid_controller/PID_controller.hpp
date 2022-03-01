@@ -10,6 +10,8 @@ private:
 	PID_Element pid_parameter;
 	float frequency;
 	PID_Element operation;
+	float operation_value;
+	float last_operation_value;
 	float last_difference = 0;
 
 public:
@@ -26,6 +28,7 @@ public:
 	void updateOperation(const float difference);
 	void resetIntegral();
 	float getOperation();
+	float getOperationDifference();
 };
 
 } // namespace aca
