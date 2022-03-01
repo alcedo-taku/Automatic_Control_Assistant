@@ -1,8 +1,13 @@
 #ifndef PID_CONTROLLER_HPP
 #define PID_CONTROLLER_HPP
-#include "PID_controller_util.hpp"
 
 namespace aca {
+
+struct PID_Element{
+    float proportional;
+    float integral;
+    float differential;
+};
 
 class PID_controller
 {
