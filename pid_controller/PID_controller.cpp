@@ -29,7 +29,7 @@ PID_controller::PID_controller(
 void PID_controller::init(const PID_Element &pid_parameter, const float frequency){
     this->pid_parameter = pid_parameter;
     this->frequency = frequency;
-    operation.integral = 0;
+    resetIntegral();
 }
 
 void PID_controller::init(const PID_Element &pid_parameter){

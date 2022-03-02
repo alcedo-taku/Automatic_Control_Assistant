@@ -14,7 +14,7 @@ class PID_controller
 private:
 	PID_Element pid_parameter;
 	float frequency;
-	PID_Element operation;
+	PID_Element operation = {0,0,0};
 	float operation_value;
 	float last_operation_value;
 	float last_difference = 0;
