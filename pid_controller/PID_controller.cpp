@@ -52,9 +52,8 @@ void PID_controller::init(const float frequency){
 }
 
 
-void PID_controller::set_stable_conditions(const float allowable_error, const uint16_t stable_time){
-	stable_conditions.allowable_error = allowable_error;
-	stable_conditions.stable_time = stable_time;
+void PID_controller::set_stable_conditions(const StableConditions &stable_conditions){
+	this->stable_conditions = stable_conditions;
 }
 
 void PID_controller::update_operation(const float difference){

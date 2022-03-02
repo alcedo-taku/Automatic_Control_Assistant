@@ -38,7 +38,7 @@ public:
 	void init(const PID_Element &pid_parameter, const float frequency);
 	void init(const PID_Element &pid_parameter);
 	void init(const float frequency);
-	void set_stable_conditions(const float allowable_error, const uint16_t stable_time);
+	void set_stable_conditions(const StableConditions &stable_conditions);
 	void update_operation(const float difference);
 	void reset_integral();
 	float get_operation();
