@@ -20,29 +20,6 @@ CoordinateMeasurer::CoordinateMeasurer(uint16_t encoderPPR, uint16_t radiusOfMea
 }
 
 /**
- * @brief 座標を取得する関数
- * @return 座標を格納した構造体
- */
-const Coordinate<float> &CoordinateMeasurer::get_coordinate(){
-	return coordinate;
-}
-
-/**
- * @brief ロボット座標の微小移動距離を フィールド座標に変換する
- * @details ロボット座標の微小移動距離 → フィールド座標の微小移動距離 → フィールド座標
- * @param micro_distance ロボット座標の微小移動距離
- * @return フィールド座標
- */
-Coordinate<float> CoordinateMeasurer::convert_to_field(Coordinate<float> micro_distance){
-	Coordinate<float> micro_field_distance;
-	float cos_value = std::cos(coordinate.angle);
-	float sin_value = std::sin(coordinate.angle);
-	micro_field_distance.x = micro_distance.x * cos_value - micro_distance.y * sin_value;
-	micro_field_distance.y = micro_distance.x * sin_value + micro_distance.y * cos_value;
-	return micro_field_distance;
-}
-
-/**
  * @brief 座標を更新する関数
  * @details 内部で、calcAngle,convert_to_robot,convert_to_field を実行している
  * @param EncoderCount そのときの各エンコーダのカウントを格納した配列
@@ -61,12 +38,35 @@ void CoordinateMeasurer::update(const std::array<int32_t,3> &EncoderCount){
 }
 
 /**
+ * @brief 座標を取得する関数
+ * @return 座標を格納した構造体
+ */
+const Coordinate<float> &CoordinateMeasurer::get_coordinate(){
+	return coordinate;
+}
+
+/**
  * @brief 座標を上書きする関数
  * @param coordinate 上書きしたい座標を格納した構造体
  */
 void CoordinateMeasurer::overwriteCoordinate(Coordinate<float> coordinate){
 	offset_angle = this->coordinate.angle - coordinate.angle;
     this->coordinate = coordinate;
+}
+
+/**
+ * @brief ロボット座標の微小移動距離を フィールド座標に変換する
+ * @details ロボット座標の微小移動距離 → フィールド座標の微小移動距離 → フィールド座標
+ * @param micro_distance ロボット座標の微小移動距離
+ * @return フィールド座標
+ */
+Coordinate<float> CoordinateMeasurer::convert_to_field(Coordinate<float> micro_distance){
+	Coordinate<float> micro_field_distance;
+	float cos_value = std::cos(coordinate.angle);
+	float sin_value = std::sin(coordinate.angle);
+	micro_field_distance.x = micro_distance.x * cos_value - micro_distance.y * sin_value;
+	micro_field_distance.y = micro_distance.x * sin_value + micro_distance.y * cos_value;
+	return micro_field_distance;
 }
 
 
@@ -88,6 +88,15 @@ CoordinateMeasurerLine::CoordinateMeasurerLine(
 }
 
 /**
+ * @brief 角度を計算する関数
+ * @param distance
+ * @return
+ */
+float CoordinateMeasurerLine::calcAngle(std::array<float,3> distance){
+	return (distance[0] - distance[2]) / (2.0*parameter.attachmentRadius);
+}
+
+/**
  * @brief 各計測輪の進んだ距離を ロボット座標の微小移動距離に変換する
  * @details 各計測輪の進んだ距離 → 各計測輪の微小進んだ距離 → ロボット座標の微小移動距離
  * @param distance 各計測輪の進んだ距離
@@ -100,15 +109,6 @@ Coordinate<float> CoordinateMeasurerLine::convert_to_robot(std::array<float,3> d
 	micro_robot_distance.y = ( (distance[0]-prev_distance[0]) + (distance[2]-prev_distance[2]) ) / 2.0;
 	prev_distance = distance;
 	return micro_robot_distance;
-}
-
-/**
- * @brief 角度を計算する関数
- * @param distance
- * @return
- */
-float CoordinateMeasurerLine::calcAngle(std::array<float,3> distance){
-	return (distance[0] - distance[2]) / (2.0*parameter.attachmentRadius);
 }
 
 
