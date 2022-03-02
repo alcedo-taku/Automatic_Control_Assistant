@@ -29,7 +29,7 @@ PID_controller::PID_controller(
 void PID_controller::init(const PID_Element &pid_parameter, const float frequency){
     this->pid_parameter = pid_parameter;
     this->frequency = frequency;
-    resetIntegral();
+    reset_integral();
 }
 
 void PID_controller::init(const PID_Element &pid_parameter){
@@ -41,7 +41,7 @@ void PID_controller::init(const float frequency){
 }
 
 
-void PID_controller::updateOperation(const float difference){
+void PID_controller::update_operation(const float difference){
 	last_operation_value = operation_value;
 	operation.proportional = difference;
 	operation.integral += (last_difference + difference) / 2 / frequency;
@@ -52,16 +52,16 @@ void PID_controller::updateOperation(const float difference){
 	last_difference = difference;
 }
 
-void PID_controller::resetIntegral(){
+void PID_controller::reset_integral(){
 	last_operation_value -= operation.integral * pid_parameter.integral;
 	operation.integral = 0;
 }
 
-float PID_controller::getOperation(){
+float PID_controller::get_operation(){
 	return operation_value;
 }
 
-float PID_controller::getOperationDifference(){
+float PID_controller::get_operation_difference(){
 	return operation_value - last_operation_value;
 }
 

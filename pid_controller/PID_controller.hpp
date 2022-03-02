@@ -26,10 +26,10 @@ public:
 	void init(const PID_Element &pid_parameter, const float frequency);
 	void init(const PID_Element &pid_parameter);
 	void init(const float frequency);
-	void updateOperation(const float difference);
-	void resetIntegral();
-	float getOperation();
-	float getOperationDifference();
+	void update_operation(const float difference);
+	void reset_integral();
+	float get_operation();
+	float get_operation_difference();
 };
 
 } // namespace aca
