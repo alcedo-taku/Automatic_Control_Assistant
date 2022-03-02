@@ -52,21 +52,26 @@ for(uint8_t i=0; i++; i<4;){
 
 ## 目次
 - [WheelController](#wheelcontroller)
+  - [駆動輪の配置](#駆動輪の配置)
+  - [サンプルプログラム](#サンプルプログラム)
+    - [コンストラクタ（オムニホイール）](#コンストラクタオムニホイール)
+    - [コンストラクタ（メカナムホイール）](#コンストラクタメカナムホイール)
+    - [更新と取得](#更新と取得)
   - [目次](#目次)
   - [クラステンプレート](#クラステンプレート)
   - [関数](#関数)
-    - [WheelController::update(CoordinateSystem_3D<float>, float)](#wheelcontrollerupdatecoordinatesystem_3dfloat-float)
-    - [WheelController::update(float, float, float, float)](#wheelcontrollerupdatefloat-float-float-float)
-    - [WheelController::get_wheel_velocity()](#wheelcontrollerget_wheel_velocity)
-    - [WheelController::get_wheel_velocity(uint8_t)](#wheelcontrollerget_wheel_velocityuint8_t)
+        - [WheelController::update(CoordinateSystem_3D<float>, float)](#wheelcontrollerupdatecoordinatesystem_3dfloat-float)
+        - [WheelController::update(float, float, float, float)](#wheelcontrollerupdatefloat-float-float-float)
+        - [WheelController::get_wheel_velocity()](#wheelcontrollerget_wheel_velocity)
+        - [WheelController::get_wheel_velocity(uint8_t)](#wheelcontrollerget_wheel_velocityuint8_t)
 - [OmniWheelController](#omniwheelcontroller)
   - [クラステンプレート](#クラステンプレート-1)
   - [コンストラクタ](#コンストラクタ)
-    - [OmniWheelController::OmniWheel(std::array<MechanicParameter, NUMBER_OF_OMNI_WHEELS>)](#omniwheelcontrolleromniwheelstdarraymechanicparameter-number_of_omni_wheels)
+        - [OmniWheelController::OmniWheel(std::array<MechanicParameter, NUMBER_OF_OMNI_WHEELS>)](#omniwheelcontrolleromniwheelstdarraymechanicparameter-number_of_omni_wheels)
 - [MecanumWheelController](#mecanumwheelcontroller)
   - [クラステンプレート](#クラステンプレート-2)
   - [コンストラクタ](#コンストラクタ-1)
-    - [MecanumWheelController::MecanumWheelController(float, float)](#mecanumwheelcontrollermecanumwheelcontrollerfloat-float)
+        - [MecanumWheelController::MecanumWheelController(float, float)](#mecanumwheelcontrollermecanumwheelcontrollerfloat-float)
 
 ## クラステンプレート
 ```c++
@@ -196,3 +201,5 @@ WHEEL_VELOCITY_TYPE: 各メカナムホイールの速度の型
 > // 例
 > aca::MecanumWheelController<int16_t> omni_wheel_controller(a, b);
 > ```
+
+[<< 戻る](../README.md)
