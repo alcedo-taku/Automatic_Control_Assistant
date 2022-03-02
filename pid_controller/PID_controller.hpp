@@ -36,116 +36,43 @@ struct StableConditions{
 class PID_controller
 {
 private:
-	//! PIDの各パラメータ
-	PID_Element pid_parameter;
+	/* 基本設定値 */
+	PID_Element pid_parameter;	 		//!< PIDの各パラメータ
+	float frequency;					//!< 制御周波数 [Hz]
 
-	//! 制御周波数 [Hz]
-	float frequency;
+	/* 操作量関係の変数 */
+	PID_Element operation;				//!< PIDの各生値（パラメータをかける前）
+	float operation_value;				//!< 操作量
+	float last_operation_value = 0;		//!< 前回の操作量
+	float last_difference = 0;			//!< 前回の差
 
-	//! PIDの各生値（パラメータをかける前）
-	PID_Element operation;
-
-	//! 操作量
-	float operation_value;
-
-	//! 前回の操作量
-	float last_operation_value = 0;
-
-	//! 前回の差
-	float last_difference = 0;
-
-	//! 安定条件
-	StableConditions stable_conditions;
-
-	//! 安定時間をカウントするカウンタ変数 [ms]
-	uint16_t stable_time_counter;
-
-	//! 安定しているかどうかを表わす変数
-	bool is_stable = false;
+	/* 安定判定関係の設定値及び変数 */
+	StableConditions stable_conditions;	//!< 安定条件
+	uint16_t stable_time_counter;		//!< 安定時間をカウントするカウンタ変数 [ms]
+	bool is_stable = false;				//!< 安定しているかどうかを表わす変数
 
 public:
-
-	/**
-	 * コンストラクタ
-	 * @param pid_parameter PIDの各パラメータ
-	 * @param frequency 制御周波数
-	 * @param stable_conditions 操作量を0にする安定条件
-	 */
+	/* コンストラクタ */
 	PID_controller(const PID_Element &pid_parameter, const float frequency, const StableConditions &stable_conditions);
-
-	/**
-	 * コンストラクタ
-	 * @param pid_parameter PIDの各パラメータ
-	 * @param frequency 制御周波数
-	 */
 	PID_controller(const PID_Element &pid_parameter, const float frequency);
-
-	/**
-	 * コンストラクタ
-	 * @param pid_parameter PIDの各パラメータ
-	 */
 	PID_controller(const PID_Element &pid_parameter);
-
-	/**
-	 * コンストラクタ
-	 * @param frequency 制御周波数
-	 */
 	PID_controller(const float frequency);
 
-	/**
-	 * 初期化関数
-	 * @param pid_parameter PIDの各パラメータ
-	 * @param frequency 制御周波数
-	 */
+	/* 初期化関数(init, reset) */
 	void init(const PID_Element &pid_parameter, const float frequency);
-
-	/**
-	 * 初期化関数
-	 * @param pid_parameter PIDの各パラメータ
-	 */
 	void init(const PID_Element &pid_parameter);
-
-	/**
-	 * 初期化関数
-	 * @param frequency 制御周波数
-	 */
 	void init(const float frequency);
-
-	/**
-	 * 安定条件を設定する関数
-	 * @param stable_conditions 安定条件を表す構造体変数
-	 */
-	void set_stable_conditions(const StableConditions &stable_conditions);
-
-	/**
-	 * 操作量を更新する関数
-	 * @param difference 偏差(誤差値)
-	 */
-	void update_operation(const float difference);
-
-	/**
-	 * 積分成分を0にリセットする関数
-	 */
 	void reset_integral();
 
-	/**
-	 * 操作量を取得する関数
-	 * @details 位置型PID（普通のPID）で使用する
-	 * @return 操作量
-	 */
+	/* 設定関数(setter) */
+	void set_stable_conditions(const StableConditions &stable_conditions);
+
+	/* 更新関数(update) */
+	void update_operation(const float difference);
+
+	/* 取得関数(getter) */
 	float get_operation();
-
-	/**
-	 * 操作量の変化を取得する関数
-	 * @details 速度型PIDで使用する
-	 * @return 操作量
-	 */
 	float get_operation_difference();
-
-	/**
-	 * 現在安定かどうかを取得する関数
-	 * @return 安定判定
-	 */
 	bool get_is_stable();
 };
 
