@@ -68,7 +68,7 @@ void PID_controller::update_operation(const float difference){
 
 	/* 許容誤差内に一定時間とどまった時、安定したとみなす */
 	if( std::fabs(difference) < stable_conditions.allowable_error ){
-		stable_time_counter++;
+		stable_time_counter += 1000.0f / frequency;
 	}else{
 		stable_time_counter = 0;
 	}
