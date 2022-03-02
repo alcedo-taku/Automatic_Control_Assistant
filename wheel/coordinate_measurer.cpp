@@ -7,16 +7,32 @@ namespace aca{
  * CoordinateMeasurer
  */
 
+/**
+ * @brief コンストラクタ
+ * @param encoderPPR エンコーダの pulse per revolution
+ * @param radiusOfMeasureWheel　計測輪の半径
+ * @param attachmentRadius 計測輪の取付半径
+ */
 CoordinateMeasurer::CoordinateMeasurer(uint16_t encoderPPR, uint16_t radiusOfMeasureWheel, uint16_t attachmentRadius){
 	parameter.encoderCPR = encoderPPR * 4;
 	parameter.radiusOfMeasureWheel = radiusOfMeasureWheel;
 	parameter.attachmentRadius = attachmentRadius;
 }
 
+/**
+ * @brief 座標を取得する関数
+ * @return 座標を格納した構造体
+ */
 const Coordinate<float> &CoordinateMeasurer::get_coordinate(){
 	return coordinate;
 }
 
+/**
+ * @brief ロボット座標の微小移動距離を フィールド座標に変換する
+ * @details ロボット座標の微小移動距離 → フィールド座標の微小移動距離 → フィールド座標
+ * @param micro_distance ロボット座標の微小移動距離
+ * @return フィールド座標
+ */
 Coordinate<float> CoordinateMeasurer::convert_to_field(Coordinate<float> micro_distance){
 	Coordinate<float> micro_field_distance;
 	float cos_value = std::cos(coordinate.angle);
@@ -26,6 +42,11 @@ Coordinate<float> CoordinateMeasurer::convert_to_field(Coordinate<float> micro_d
 	return micro_field_distance;
 }
 
+/**
+ * @brief 座標を更新する関数
+ * @details 内部で、calcAngle,convert_to_robot,convert_to_field を実行している
+ * @param EncoderCount そのときの各エンコーダのカウントを格納した配列
+ */
 void CoordinateMeasurer::update(const std::array<int32_t,3> &EncoderCount){
 	std::array<float,3> distance;
 	for(uint8_t i = 0; i < 3; i++){
@@ -39,6 +60,10 @@ void CoordinateMeasurer::update(const std::array<int32_t,3> &EncoderCount){
 	prev_micro_field_distance = micro_field_distance;
 }
 
+/**
+ * @brief 座標を上書きする関数
+ * @param coordinate 上書きしたい座標を格納した構造体
+ */
 void CoordinateMeasurer::overwriteCoordinate(Coordinate<float> coordinate){
 	offset_angle = this->coordinate.angle - coordinate.angle;
     this->coordinate = coordinate;
@@ -49,6 +74,12 @@ void CoordinateMeasurer::overwriteCoordinate(Coordinate<float> coordinate){
  * CoordinateMeasurerLine
  */
 
+/**
+ * @brief コンストラクタ
+ * @param encoderPPR エンコーダの pulse per revolution
+ * @param radiusOfMeasureWheel　計測輪の半径
+ * @param attachmentRadius 計測輪の取付半径
+ */
 CoordinateMeasurerLine::CoordinateMeasurerLine(
 	uint16_t encoderPPR, uint16_t radiusOfMeasureWheel, uint16_t attachmentRadius
 ):
@@ -56,6 +87,12 @@ CoordinateMeasurerLine::CoordinateMeasurerLine(
 {
 }
 
+/**
+ * @brief 各計測輪の進んだ距離を ロボット座標の微小移動距離に変換する
+ * @details 各計測輪の進んだ距離 → 各計測輪の微小進んだ距離 → ロボット座標の微小移動距離
+ * @param distance 各計測輪の進んだ距離
+ * @return ロボット座標の微小移動距離
+ */
 Coordinate<float> CoordinateMeasurerLine::convert_to_robot(std::array<float,3> distance){
 	Coordinate<float> micro_robot_distance;
 	static std::array<float,3> prev_distance = distance;
@@ -65,6 +102,11 @@ Coordinate<float> CoordinateMeasurerLine::convert_to_robot(std::array<float,3> d
 	return micro_robot_distance;
 }
 
+/**
+ * @brief 角度を計算する関数
+ * @param distance
+ * @return
+ */
 float CoordinateMeasurerLine::calcAngle(std::array<float,3> distance){
 	return (distance[0] - distance[2]) / (2.0*parameter.attachmentRadius);
 }
@@ -74,6 +116,12 @@ float CoordinateMeasurerLine::calcAngle(std::array<float,3> distance){
  * CoordinateMeasurerTriangle
  */
 
+/**
+ * @brief コンストラクタ
+ * @param encoderPPR エンコーダの pulse per revolution
+ * @param radiusOfMeasureWheel　計測輪の半径
+ * @param attachmentRadius 計測輪の取付半径
+ */
 CoordinateMeasurerTriangle::CoordinateMeasurerTriangle(
 	uint16_t encoderPPR, uint16_t radiusOfMeasureWheel, uint16_t attachmentRadius
 ):
@@ -81,6 +129,12 @@ CoordinateMeasurerTriangle::CoordinateMeasurerTriangle(
 {
 }
 
+/**
+ * @brief 各計測輪の進んだ距離を ロボット座標の微小移動距離に変換する
+ * @details 各計測輪の進んだ距離 → 各計測輪の微小進んだ距離 → ロボット座標の微小移動距離
+ * @param distance 各計測輪の進んだ距離
+ * @return ロボット座標の微小移動距離
+ */
 Coordinate<float> CoordinateMeasurerTriangle::convert_to_robot(std::array<float,3> distance){
 	Coordinate<float> micro_robot_distance;
 	static std::array<float,3> prev_distance = distance;
@@ -90,6 +144,11 @@ Coordinate<float> CoordinateMeasurerTriangle::convert_to_robot(std::array<float,
 	return micro_robot_distance;
 }
 
+/**
+ * @brief 角度を計算する関数
+ * @param distance
+ * @return
+ */
 float CoordinateMeasurerTriangle::calcAngle(std::array<float,3> distance){
 	return (distance[0] + distance[1] + distance[2]) / (3.0 * parameter.attachmentRadius);
 }
