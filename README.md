@@ -17,8 +17,31 @@ namespace aca
     - CoordinateMeasurerTriangle
 - [TargetBasedOnTime](target_based_on_time/README.md)
 - [PID_controller](pid_controller/README.md)
-  - [PID_controller](pid_controller/pid_controller/README.md)
-  - [PID_controller_velocity](pid_controller/pid_controller_velocity/README.md)
 
 ## 設計思想
 - HALライブラリの環境に依存しない
+
+## フォーマット
+- README
+  - 以下のテンプレートに沿って書く
+    ```md
+    # タイトル
+    概要説明
+
+    ## 設計思想
+
+    ## クラス
+
+    ## 使用するのに必要な知識
+
+    ## 理解するのに必要な知識
+
+    ## サンプルプログラム
+    ### コンストラクタ
+    ### 更新と取得
+
+    [<< 戻る](../README.md)
+    ```
+
+- コメント
+  - 関数はソースファイルに、クラス,構造体,変数はヘッダファイルに Doxygen 形式でコメントを書く
