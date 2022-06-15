@@ -25,12 +25,19 @@ struct RobotParameter {
 class CoordinateMeasurer{
 public:
 	CoordinateMeasurer(uint16_t encoder_PPR, uint16_t radius_of_measure_Wheel, uint16_t attachment_radius);
+
 	void update(const std::array<int32_t,3> &encoder_count);
+	void update(const std::array<int32_t,4> &encoder_count);
+
 	const Coordinate<float> &get_coordinate();
 	void overwrite_coordinate(Coordinate<float> coordinate);
 private:
-	virtual float calc_angle(std::array<float,3> distance) = 0;
-	virtual Coordinate<float> convert_to_robot(std::array<float,3> distance) = 0;
+	virtual float calc_angle(std::array<float,3> distance){return 0;}
+	virtual Coordinate<float> convert_to_robot(std::array<float,3> distance){return {0,0,0};}
+
+	virtual float calc_angle(std::array<float,4> distance){return 0;}
+	virtual Coordinate<float> convert_to_robot(std::array<float,4> distance){return {0,0,0};}
+
 	Coordinate<float> convert_to_field(Coordinate<float> micro_distance);
 protected:
 	Coordinate<float> coordinate; 	//!< フィールド座標(field_coordinate)
@@ -65,6 +72,21 @@ private:
 	float calc_angle(std::array<float,3> distance) override;
 	Coordinate<float> convert_to_robot(std::array<float,3> distance) override;
 };
+
+
+
+/**
+ * @class CoordinateMeasurerSquare
+ * @brief 四角形配置計測輪のため、CoordinateMeasurer を継承したライブラリ
+ */
+class CoordinateMeasurerSquare : public CoordinateMeasurer{
+public:
+	CoordinateMeasurerSquare(uint16_t encoderPPR, uint16_t radiusOfMeasureWheel, uint16_t attachmentRadius);
+private:
+	float calc_angle(std::array<float,4> distance) override;
+	Coordinate<float> convert_to_robot(std::array<float,4> distance) override;
+};
+
 
 }; // namespace aca
 
