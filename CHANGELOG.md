@@ -1,5 +1,16 @@
 # 変更履歴
 
+## v3.4.0
+- ドキュメント
+   - フォーマット コミットメッセージを追加
+   - リリース時の手順を追加
+- クラスを追加
+   - `CoordinateMeasurer`
+     - `CoordinateMeasurerSquare`
+- CoordinateMeasurer
+  - エンコーダの数をテンプレートで変更できるようにした
+  - `CoordinateMeasurer.cpp`を`CoordinateMeasurer.hpp`に統合
+
 ## v3.3.0
 - ドキュメント
   - フォーマット を追加

@@ -3,6 +3,7 @@
 
 #include <array>
 #include <cmath>
+#include <cstdint>
 #include "coordinate.hpp"
 
 namespace aca {
