@@ -1,6 +1,5 @@
 # 変更履歴
 
-
 ## v3.4.0
 - ドキュメント
    - フォーマット コミットメッセージを追加
@@ -9,8 +8,9 @@
    - `CoordinateMeasurer`
      - `CoordinateMeasurerSquare`
 - CoordinateMeasurer
-  - エンコーダーの数をテンプレートで変更できるようにした
+  - エンコーダの数をテンプレートで変更できるようにした
   - `CoordinateMeasurer.cpp`を`CoordinateMeasurer.hpp`に統合
+
 ## v3.3.0
 - ドキュメント
   - フォーマット を追加
