@@ -17,7 +17,7 @@ template <std::size_t  NUMBER_OF_ENCODER>
 struct RobotParameter {
 	uint16_t encoder_CPR; // encoder count per revolution
 	uint16_t radius_of_measure_wheel;
-	uint16_t attachment_radius;
+	uint16_t radius_of_attachment;
 	std::array<float,NUMBER_OF_ENCODER> encoder_attachment_angle;
 };
 
@@ -38,13 +38,13 @@ public:
 	 * @brief コンストラクタ
 	 * @param encoder_PPR エンコーダの pulse per revolution
 	 * @param radius_of_measure_Wheel　計測輪の半径
-	 * @param attachment_radius 計測輪の取付半径
+	 * @param radius_of_attachment 計測輪の取付半径
 	 * @param encoder_attachment_angle 各計測輪自身の角度
 	 */
-	CoordinateMeasurer(uint16_t encoder_PPR, uint16_t radius_of_measure_Wheel, uint16_t attachment_radius,std::array<float, NUMBER_OF_ENCODER> encoder_attachment_angle){
+	CoordinateMeasurer(uint16_t encoder_PPR, uint16_t radius_of_measure_Wheel, uint16_t radius_of_attachment,std::array<float, NUMBER_OF_ENCODER> encoder_attachment_angle){
 		parameter.encoder_CPR = encoder_PPR * 4;
 		parameter.radius_of_measure_wheel = radius_of_measure_Wheel;
-		parameter.attachment_radius = attachment_radius;
+		parameter.radius_of_attachment = radius_of_attachment;
 		parameter.encoder_attachment_angle = encoder_attachment_angle;
 	}
 
@@ -121,13 +121,13 @@ public:
 	 * @brief コンストラクタ
 	 * @param encoder_PPR エンコーダの pulse per revolution
 	 * @param radius_of_measure_Wheel　計測輪の半径
-	 * @param attachment_radius 計測輪の取付半径
+	 * @param radius_of_attachment 計測輪の取付半径
 	 * @param encoder_attachment_angle 各計測輪自身の角度
 	 */
 	CoordinateMeasurerLine(
-		uint16_t encoder_PPR, uint16_t radius_of_measure_Wheel, uint16_t attachment_radius, std::array<float,NUMBER_OF_ENCODER> encoder_attachment_angle
+		uint16_t encoder_PPR, uint16_t radius_of_measure_Wheel, uint16_t radius_of_attachment, std::array<float,NUMBER_OF_ENCODER> encoder_attachment_angle
 	):
-		CoordinateMeasurer<NUMBER_OF_ENCODER>(encoder_PPR, radius_of_measure_Wheel, attachment_radius, encoder_attachment_angle)
+		CoordinateMeasurer<NUMBER_OF_ENCODER>(encoder_PPR, radius_of_measure_Wheel, radius_of_attachment, encoder_attachment_angle)
 	{
 	}
 
@@ -138,7 +138,7 @@ private:
 	 * @return
 	 */
 	float calc_angle(std::array<float,NUMBER_OF_ENCODER> distance) override {
-		return ( ( distance[0]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle[0]*M_PI/180) ) - ( distance[2]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle[2]*M_PI/180) ) ) / (2.0*CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.attachment_radius);
+		return ( ( distance[0]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle[0]*M_PI/180) ) - ( distance[2]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle[2]*M_PI/180) ) ) / (2.0*CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.radius_of_attachment);
 	}
 
 	/**
@@ -173,13 +173,13 @@ public:
 	 * @brief コンストラクタ
 	 * @param encoder_PPR エンコーダの pulse per revolution
 	 * @param radius_of_measure_Wheel　計測輪の半径
-	 * @param attachment_radius 計測輪の取付半径
+	 * @param radius_of_attachment 計測輪の取付半径
 	 * @param encoder_attachment_angle 各計測輪自身の角度
 	 */
 	CoordinateMeasurerTriangle(
-		uint16_t encoder_PPR, uint16_t radius_of_measure_Wheel, uint16_t attachment_radius, std::array<float,NUMBER_OF_ENCODER> encoder_attachment_angle
+		uint16_t encoder_PPR, uint16_t radius_of_measure_Wheel, uint16_t radius_of_attachment, std::array<float,NUMBER_OF_ENCODER> encoder_attachment_angle
 	):
-		CoordinateMeasurer<NUMBER_OF_ENCODER>(encoder_PPR, radius_of_measure_Wheel, attachment_radius, encoder_attachment_angle)
+		CoordinateMeasurer<NUMBER_OF_ENCODER>(encoder_PPR, radius_of_measure_Wheel, radius_of_attachment, encoder_attachment_angle)
 	{
 	}
 
@@ -191,7 +191,7 @@ private:
 	 * @return
 	 */
 	float calc_angle(std::array<float,NUMBER_OF_ENCODER> distance) override {
-		return ( ( ( distance[0]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle[0]*M_PI/180) ) / std::sin(180) ) +  ( ( distance[1]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle[1]*M_PI/180) ) / std::sin(330) ) +  ( ( distance[2]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle[2]*M_PI/180) ) / std::sin(60) ) ) / (3.0 * CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.attachment_radius);
+		return ( ( ( distance[0]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle[0]*M_PI/180) ) / std::sin(180) ) +  ( ( distance[1]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle[1]*M_PI/180) ) / std::sin(330) ) +  ( ( distance[2]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle[2]*M_PI/180) ) / std::sin(60) ) ) / (3.0 * CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.radius_of_attachment);
 	}
 
 	/**
@@ -226,13 +226,13 @@ public:
 	 * @brief コンストラクタ
 	 * @param encoder_PPR エンコーダの pulse per revolution
 	 * @param radius_of_measure_Wheel　計測輪の半径
-	 * @param attachment_radius 計測輪の取付半径
+	 * @param radius_of_attachment 計測輪の取付半径
 	 * @param encoder_attachment_angle各計測輪自身の角度
 	 */
 	CoordinateMeasurerSquare(
-		uint16_t encoder_PPR, uint16_t radius_of_measure_wheel, uint16_t attachment_radius, std::array<float,NUMBER_OF_ENCODER> encoder_attachment_angle
+		uint16_t encoder_PPR, uint16_t radius_of_measure_wheel, uint16_t radius_of_attachment, std::array<float,NUMBER_OF_ENCODER> encoder_attachment_angle
 	):
-		CoordinateMeasurer<NUMBER_OF_ENCODER>(encoder_PPR, radius_of_measure_wheel, attachment_radius ,encoder_attachment_angle)
+		CoordinateMeasurer<NUMBER_OF_ENCODER>(encoder_PPR, radius_of_measure_wheel, radius_of_attachment ,encoder_attachment_angle)
 	{
 	}
 private:
@@ -243,7 +243,7 @@ private:
 	 */
 	float calc_angle(std::array<float,NUMBER_OF_ENCODER> distance) override {
 		return (-distance[0]*std::cos(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle[0]*M_PI/180) - distance[1]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle[1]*M_PI/180)
-			  + distance[2]*std::cos(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle[2]*M_PI/180) + distance[3]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle[3]*M_PI/180))/(4.0*CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.attachment_radius);
+			  + distance[2]*std::cos(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle[2]*M_PI/180) + distance[3]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle[3]*M_PI/180))/(4.0*CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.radius_of_attachment);
 	}
 
 	/**
