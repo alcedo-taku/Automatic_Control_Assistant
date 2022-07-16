@@ -103,7 +103,7 @@ private:
 protected:
 	Coordinate<float> coordinate; 					//!< フィールド座標(field_coordinate)
 	float offset_angle;								//!< 座標を上書きされたときの角度のオフセット量
-	RobotParameter<NUMBER_OF_ENCODER> parameter;	//!< 
+	RobotParameter<NUMBER_OF_ENCODER> parameter;	//!< ロボットのパラメータを格納する構造体のインスタンス
 };
 
 
@@ -133,7 +133,7 @@ private:
 	/**
 	 * @brief 角度を計算する関数
 	 * @param distance
-	 * @return
+	 * @return ロボットの回転した角度
 	 */
 	float calc_angle(std::array<float,NUMBER_OF_ENCODER> distance) override {
 		return ( ( distance[0]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle[0]*M_PI/180) ) - ( distance[2]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle[2]*M_PI/180) ) ) / (2.0*CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.radius_of_attachment);
@@ -183,7 +183,7 @@ private:
 	/**
 	 * @brief 角度を計算する関数
 	 * @param distance
-	 * @return
+	 * @return　ロボットの回転した角度
 	 */
 	float calc_angle(std::array<float,NUMBER_OF_ENCODER> distance) override {
 		return ( ( ( distance[0]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle[0]*M_PI/180) ) / std::sin(180) ) +  ( ( distance[1]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle[1]*M_PI/180) ) / std::sin(330) ) +  ( ( distance[2]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle[2]*M_PI/180) ) / std::sin(60) ) ) / (3.0 * CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.radius_of_attachment);
@@ -233,7 +233,7 @@ private:
 	/**
 	 * @brief 角度を計算する関数
 	 * @param distance
-	 * @return
+	 * @return　ロボットの回転した角度
 	 */
 	float calc_angle(std::array<float,NUMBER_OF_ENCODER> distance) override {
 		return (-distance[0]*std::cos(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle[0]*M_PI/180) - distance[1]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle[1]*M_PI/180)
