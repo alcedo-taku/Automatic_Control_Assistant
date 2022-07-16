@@ -21,9 +21,7 @@ struct RobotParameter {
 	std::array<float,NUMBER_OF_ENCODER> encoder_attachment_angle;
 };
 
-/*
- * CoordinateMeasurer
- */
+
 
 /**
  * @class CoordinateMeasurer
@@ -82,6 +80,7 @@ public:
 		offset_angle = this->coordinate.angle - coordinate.angle;
 	    this->coordinate = coordinate;
 	}
+
 private:
 	virtual float calc_angle(std::array<float,NUMBER_OF_ENCODER> distance) = 0;
 	virtual Coordinate<float> convert_to_robot(std::array<float,NUMBER_OF_ENCODER> distance) = 0;
@@ -100,15 +99,14 @@ private:
 		micro_field_distance.y = micro_distance.x * sin_value + micro_distance.y * cos_value;
 		return micro_field_distance;
 	}
+
 protected:
-	Coordinate<float> coordinate; 	//!< フィールド座標(field_coordinate)
-	float offset_angle;				//!< 座標を上書きされたときの角度のオフセット量
-	RobotParameter<NUMBER_OF_ENCODER> parameter;
+	Coordinate<float> coordinate; 					//!< フィールド座標(field_coordinate)
+	float offset_angle;								//!< 座標を上書きされたときの角度のオフセット量
+	RobotParameter<NUMBER_OF_ENCODER> parameter;	//!< 
 };
 
-/*
- * CoordinateMeasurerLine
- */
+
 
 /**
  * @class CoordinateMeasurerLine
@@ -158,9 +156,7 @@ private:
 
 };
 
-/*
- * CoordinateMeasurerTriangle
- */
+
 
 /**
  * @class CoordinateMeasurerTriangle
@@ -182,7 +178,6 @@ public:
 		CoordinateMeasurer<NUMBER_OF_ENCODER>(encoder_PPR, radius_of_measure_Wheel, radius_of_attachment, encoder_attachment_angle)
 	{
 	}
-
 
 private:
 	/**
@@ -211,9 +206,7 @@ private:
 
 };
 
-/*
- * CoordinateMeasurerSquare
- */
+
 
 /**
  * @class CoordinateMeasurerSquare
@@ -235,6 +228,7 @@ public:
 		CoordinateMeasurer<NUMBER_OF_ENCODER>(encoder_PPR, radius_of_measure_wheel, radius_of_attachment ,encoder_attachment_angle)
 	{
 	}
+
 private:
 	/**
 	 * @brief 角度を計算する関数
@@ -264,7 +258,6 @@ private:
 	}
 
 };
-
 
 }; // namespace aca
 
