@@ -1,4 +1,4 @@
-# Automatic_Control_Assistant - 3.4.0
+# Automatic_Control_Assistant - 3.5.0
 ```c++
 #include "Automatic_Control_Assistant.hpp"
 ```
@@ -15,6 +15,7 @@ namespace aca
   - [CoordinateMeasurer](wheel/coordinate_measurer/README.md)
     - CoordinateMeasurerLine
     - CoordinateMeasurerTriangle
+    - CoordinateMeasurerSquare
 - [TargetBasedOnTime](target_based_on_time/README.md)
 - [PID_controller](pid_controller/README.md)
 
