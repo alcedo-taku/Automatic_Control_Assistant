@@ -7,22 +7,24 @@
 ![計測輪配置の図](measuring_wheel_position.png "計測輪配置")
 数字：計測輪の番号  
 矢印：正の方向  
-※ 四角形配置は未実装
 
 
 ## サンプルプログラム
 詳細は [coordinate_measurer.hpp](..\coordinate_measurer.hpp) に書いてあるので、参照すること。
-三角形配置の場合を記すが、H型配置の場合も同様
+四角形配置の場合を記すが、三角形配置、H型配置の場合も同様
 
 ### コンストラクタ
 引数：PPR, 計測輪半径, 取付半径
 ```C++
-aca::CoordinateMeasurerTriangle coordinate_measurer(1000, 30, 270);
+std::array<float,4> encoder_angle = {180, 270, 0, 90}; // 各エンコーダの角度
+aca::CoordinateMeasurerSquare coordinate_measurer(
+    1000, 30, 270, encoder_angle
+    );
 ```
 
 ### 座標の更新と取得
 ```C++
-std::array<int32_t,3> encoder_count; // 現在のエンコーダのカウント
+std::array<int32_t,4> encoder_count; // 現在のエンコーダのカウント
 coordinate_measurer.update(encoder_count);
 
 aca::Coordinate coordinate;
