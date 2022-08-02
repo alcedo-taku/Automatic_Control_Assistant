@@ -1,5 +1,8 @@
 # 変更履歴
 
+## v3.5.1
+  - CoordinateMeasurer
+    - 三角形配置の角度の計算が間違っていたので修正
 ## v3.5.0
   - CoordinateMeasurer
     - エンコーダ自身の角度を微調整できる機能を追加
