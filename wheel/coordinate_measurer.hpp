@@ -186,7 +186,7 @@ private:
 	 * @return　ロボットの回転した角度
 	 */
 	float calc_angle(std::array<float,NUMBER_OF_ENCODER> distance) override {
-		return ( ( ( distance[0]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle[0]*M_PI/180) ) / std::sin(180) ) +  ( ( distance[1]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle[1]*M_PI/180) ) / std::sin(330) ) +  ( ( distance[2]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle[2]*M_PI/180) ) / std::sin(60) ) ) / (3.0 * CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.radius_of_attachment);
+		return ( ( ( distance[0]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle[0]*M_PI/180) ) / std::sin(180*M_PI/180) ) +  ( ( distance[1]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle[1]*M_PI/180) ) / std::sin(300*M_PI/180) ) +  ( ( distance[2]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle[2]*M_PI/180) ) / std::sin(60*M_PI/180) ) ) / (3.0 * CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.radius_of_attachment);
 	}
 
 	/**
