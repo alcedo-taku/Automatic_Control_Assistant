@@ -15,9 +15,9 @@ namespace aca{
  */
 template <std::size_t  NUMBER_OF_ENCODER>
 struct RobotParameter {
-	uint16_t encoder_CPR; // encoder count per revolution
-	uint16_t radius_of_measure_wheel;
-	uint16_t radius_of_attachment;
+	std::array<uint16_t,NUMBER_OF_ENCODER> encoder_CPR; // encoder count per revolution
+	std::array<uint16_t,NUMBER_OF_ENCODER> radius_of_measure_wheel;
+	std::array<uint16_t,NUMBER_OF_ENCODER> radius_of_attachment;
 	std::array<float,NUMBER_OF_ENCODER> encoder_attachment_angle_TCP; //encoder tea ceremony procedures
 	std::array<float,NUMBER_OF_ENCODER> encoder_attachment_angle_true;
 };
@@ -41,12 +41,20 @@ public:
 	 * @param encoder_attachment_angle_TCP 各計測輪自身の建前の角度
 	 * @param encoder_attachment_angle_true 各計測輪自身の実際の角度
 	 */
-	CoordinateMeasurer(uint16_t encoder_PPR, uint16_t radius_of_measure_Wheel, uint16_t radius_of_attachment, std::array<float,NUMBER_OF_ENCODER> encoder_attachment_angle_TCP, std::array<float, NUMBER_OF_ENCODER> encoder_attachment_angle_true){
-		parameter.encoder_CPR = encoder_PPR * 4;
+	CoordinateMeasurer(std::array<uint16_t,NUMBER_OF_ENCODER> encoder_PPR, std::array<uint16_t,NUMBER_OF_ENCODER> radius_of_measure_Wheel, std::array<uint16_t,NUMBER_OF_ENCODER> radius_of_attachment, std::array<float,NUMBER_OF_ENCODER> encoder_attachment_angle_TCP, std::array<float, NUMBER_OF_ENCODER> encoder_attachment_angle_true) {
+		parameter.encoder_CPR = encoder_PPR;
 		parameter.radius_of_measure_wheel = radius_of_measure_Wheel;
 		parameter.radius_of_attachment = radius_of_attachment;
 		parameter.encoder_attachment_angle_TCP= encoder_attachment_angle_TCP;
 		parameter.encoder_attachment_angle_true = encoder_attachment_angle_true;
+	}
+	CoordinateMeasurer(uint16_t encoder_PPR, uint16_t radius_of_measure_Wheel, uint16_t radius_of_attachment, std::array<float, NUMBER_OF_ENCODER> encoder_attachment_angle){
+		for(int i=0;i<4;i++){
+			parameter.encoder_CPR[i] = encoder_PPR;
+			parameter.radius_of_measure_wheel[i] = radius_of_measure_Wheel;
+			parameter.radius_of_attachment[i] = radius_of_attachment;
+		}
+		parameter.encoder_attachment_angle_true = encoder_attachment_angle;
 	}
 
 	/**
@@ -57,7 +65,7 @@ public:
 	void update(const std::array<int32_t,NUMBER_OF_ENCODER> &encoder_count){
 		std::array<float,NUMBER_OF_ENCODER> distance;
 		for(uint8_t i = 0; i < NUMBER_OF_ENCODER; i++){
-			distance[i] = 2.0 * M_PI * parameter.radius_of_measure_wheel * (float)encoder_count[i] / (float)parameter.encoder_CPR;
+			distance[i] = 2.0 * M_PI * parameter.radius_of_measure_wheel[i] * (float)encoder_count[i] / (float)parameter.encoder_CPR[i] * 4;
 		}
 		coordinate.angle = calc_angle(distance) - offset_angle;
 		Coordinate<float> micro_field_distance = convert_to_field( convert_to_robot(distance) );
@@ -140,7 +148,7 @@ private:
 	 * @return ロボットの回転した角度
 	 */
 	float calc_angle(std::array<float,NUMBER_OF_ENCODER> distance) override {
-		return ( ( distance[0]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[0]*M_PI/180) ) - ( distance[2]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[2]*M_PI/180) ) ) / (2.0*CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.radius_of_attachment);
+		return ( ( distance[0]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[0]*M_PI/180) ) - ( distance[2]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[2]*M_PI/180) ) ) / (2.0*CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.radius_of_attachment[0]);
 	}
 
 	/**
@@ -191,7 +199,7 @@ private:
 	 * @return　ロボットの回転した角度
 	 */
 	float calc_angle(std::array<float,NUMBER_OF_ENCODER> distance) override {
-		return ( ( ( distance[0]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[0]*M_PI/180) ) / std::sin(180*M_PI/180) ) +  ( ( distance[1]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[1]*M_PI/180) ) / std::sin(300*M_PI/180) ) +  ( ( distance[2]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[2]*M_PI/180) ) / std::sin(60*M_PI/180) ) ) / (3.0 * CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.radius_of_attachment);
+		return ( ( ( distance[0]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[0]*M_PI/180) ) / std::sin(180*M_PI/180) ) +  ( ( distance[1]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[1]*M_PI/180) ) / std::sin(300*M_PI/180) ) +  ( ( distance[2]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[2]*M_PI/180) ) / std::sin(60*M_PI/180) ) ) / (3.0 * CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.radius_of_attachment[0]);
 	}
 
 	/**
@@ -229,9 +237,9 @@ public:
 	 * @param encoder_attachment_angle_true 各計測輪自身の実際の角度
 	 */
 	CoordinateMeasurerSquare(
-		uint16_t encoder_PPR, uint16_t radius_of_measure_wheel, uint16_t radius_of_attachment, std::array<float,NUMBER_OF_ENCODER> encoder_attachment_angle_TCP, std::array<float,NUMBER_OF_ENCODER> encoder_attachment_angle_true
+		uint16_t encoder_PPR, uint16_t radius_of_measure_wheel, uint16_t radius_of_attachment, std::array<float,NUMBER_OF_ENCODER> encoder_attachment_angle_true
 	):
-		CoordinateMeasurer<NUMBER_OF_ENCODER>(encoder_PPR, radius_of_measure_wheel, radius_of_attachment ,encoder_attachment_angle_TCP,encoder_attachment_angle_true)
+		CoordinateMeasurer<NUMBER_OF_ENCODER>(encoder_PPR, radius_of_measure_wheel, radius_of_attachment ,encoder_attachment_angle_true)
 	{
 	}
 
@@ -243,7 +251,7 @@ private:
 	 */
 	float calc_angle(std::array<float,NUMBER_OF_ENCODER> distance) override {
 		return (-distance[0]*std::cos(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[0]*M_PI/180) - distance[1]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[1]*M_PI/180)
-			  + distance[2]*std::cos(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[2]*M_PI/180) + distance[3]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[3]*M_PI/180))/(4.0*CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.radius_of_attachment);
+			  + distance[2]*std::cos(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[2]*M_PI/180) + distance[3]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[3]*M_PI/180))/(4.0*CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.radius_of_attachment[0]);
 	}
 
 	/**
@@ -283,7 +291,7 @@ public:
 	 * @param encoder_attachment_angle_true 各計測輪自身の実際の角度
 	 */
 	CoordinateMeasurerFreedom(
-		uint16_t encoder_PPR, uint16_t radius_of_measure_wheel, uint16_t radius_of_attachment, std::array<float,NUMBER_OF_ENCODER> encoder_attachment_angle_TCP, std::array<float,NUMBER_OF_ENCODER> encoder_attachment_angle_true
+			 std::array<uint16_t,NUMBER_OF_ENCODER> encoder_PPR,  std::array<uint16_t,NUMBER_OF_ENCODER> radius_of_measure_wheel,  std::array<uint16_t,NUMBER_OF_ENCODER> radius_of_attachment, std::array<float,NUMBER_OF_ENCODER> encoder_attachment_angle_TCP, std::array<float,NUMBER_OF_ENCODER> encoder_attachment_angle_true
 	):
 		CoordinateMeasurer<NUMBER_OF_ENCODER>(encoder_PPR, radius_of_measure_wheel, radius_of_attachment , encoder_attachment_angle_TCP, encoder_attachment_angle_true)
 	{
@@ -298,7 +306,7 @@ private:
 	float calc_angle(std::array<float,NUMBER_OF_ENCODER> distance) override {
 		float calc_angle = 0;
 		for(int i = 0; i < (int)NUMBER_OF_ENCODER; i++){
-			calc_angle += ( ( distance[i]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[i]*M_PI/180) ) / std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_TCP[i]*M_PI/180) )/(NUMBER_OF_ENCODER*CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.radius_of_attachment);
+			calc_angle += ( ( distance[i]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[i]*M_PI/180) ) / std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_TCP[i]*M_PI/180) )/(NUMBER_OF_ENCODER*CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.radius_of_attachment[i]);
 		}
 		return calc_angle;
 	}
@@ -319,20 +327,20 @@ private:
 		float micro_robot_distance_xs = 0;
 		float micro_robot_distance_ys = 0;
 		for(int i = 0; i < (int)NUMBER_OF_ENCODER; i++){
-			if(std::abs(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[i]) == 90 || std::abs(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[i]) == 270){
+			if(std::abs(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_TCP[i]) == 90 || std::abs(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_TCP[i]) == 270){
 				xs_count++;
 			}
-			if(std::abs(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[i]) == 360 || std::abs(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[i]) == 180){
+			if(std::abs(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_TCP[i]) == 360 || std::abs(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_TCP[i]) == 180){
 				ys_count++;
 			}
 		}
 		for(int i = 0; i < (int)NUMBER_OF_ENCODER; i++){
-			if(std::abs(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[i]) == 90 || std::abs(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[i]) == 270){
+			if(std::abs(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_TCP[i]) == 90 || std::abs(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_TCP[i]) == 270){
 				micro_robot_distance_xs += (distance[i]-prev_distance[i])*std::cos(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[i]*M_PI/180) / xs_count;
 			}else{
 				micro_robot_distance_xm += (distance[i]-prev_distance[i])*std::cos(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[i]*M_PI/180) / (NUMBER_OF_ENCODER - xs_count);
 			}
-			if(std::abs(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[i]) == 360 || std::abs(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[i]) == 180){
+			if(std::abs(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_TCP[i]) == 360 || std::abs(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_TCP[i]) == 180){
 				micro_robot_distance_ys += (distance[i]-prev_distance[i])*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[i]*M_PI/180) / ys_count;
 			}else{
 				micro_robot_distance_ym += (distance[i]-prev_distance[i])*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[i]*M_PI/180) / (NUMBER_OF_ENCODER - ys_count);
@@ -346,6 +354,8 @@ private:
 	}
 
 };
+
+
 
 }; // namespace aca
 
