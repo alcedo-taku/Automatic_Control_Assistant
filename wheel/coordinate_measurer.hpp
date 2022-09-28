@@ -42,7 +42,7 @@ public:
 	 * @param encoder_attachment_angle_true 各計測輪自身の実際の角度
 	 */
 	CoordinateMeasurer(std::array<uint16_t,NUMBER_OF_ENCODER> encoder_PPR, std::array<uint16_t,NUMBER_OF_ENCODER> radius_of_measure_Wheel, std::array<uint16_t,NUMBER_OF_ENCODER> radius_of_attachment, std::array<float,NUMBER_OF_ENCODER> encoder_attachment_angle_TCP, std::array<float, NUMBER_OF_ENCODER> encoder_attachment_angle_true) {
-		parameter.encoder_CPR = encoder_PPR;
+		parameter.encoder_CPR = encoder_PPR * 4;
 		parameter.radius_of_measure_wheel = radius_of_measure_Wheel;
 		parameter.radius_of_attachment = radius_of_attachment;
 		parameter.encoder_attachment_angle_TCP= encoder_attachment_angle_TCP;
@@ -50,7 +50,7 @@ public:
 	}
 	CoordinateMeasurer(uint16_t encoder_PPR, uint16_t radius_of_measure_Wheel, uint16_t radius_of_attachment, std::array<float, NUMBER_OF_ENCODER> encoder_attachment_angle){
 		for(int i=0;i<4;i++){
-			parameter.encoder_CPR[i] = encoder_PPR;
+			parameter.encoder_CPR[i] = encoder_PPR * 4;
 			parameter.radius_of_measure_wheel[i] = radius_of_measure_Wheel;
 			parameter.radius_of_attachment[i] = radius_of_attachment;
 		}
@@ -65,7 +65,7 @@ public:
 	void update(const std::array<int32_t,NUMBER_OF_ENCODER> &encoder_count){
 		std::array<float,NUMBER_OF_ENCODER> distance;
 		for(uint8_t i = 0; i < NUMBER_OF_ENCODER; i++){
-			distance[i] = 2.0 * M_PI * parameter.radius_of_measure_wheel[i] * (float)encoder_count[i] / (float)parameter.encoder_CPR[i] * 4;
+			distance[i] = 2.0 * M_PI * parameter.radius_of_measure_wheel[i] * (float)encoder_count[i] / (float)parameter.encoder_CPR[i];
 		}
 		coordinate.angle = calc_angle(distance) - offset_angle;
 		Coordinate<float> micro_field_distance = convert_to_field( convert_to_robot(distance) );
