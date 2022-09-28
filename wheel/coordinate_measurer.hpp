@@ -112,7 +112,7 @@ private:
 	}
 
 protected:
-	Coordinate<float> coordinate; 					//!< フィールド座標(field_coordinate)
+	Coordinate<float> coordinate;					//!< フィールド座標(field_coordinate)
 	float offset_angle;								//!< 座標を上書きされたときの角度のオフセット量
 	RobotParameter<NUMBER_OF_ENCODER> parameter;	//!< ロボットのパラメータを格納する構造体のインスタンス
 };
@@ -148,7 +148,7 @@ private:
 	 * @return ロボットの回転した角度
 	 */
 	float calc_angle(std::array<float,NUMBER_OF_ENCODER> distance) override {
-		return ( ( distance[0]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[0]*M_PI/180) ) - ( distance[2]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[2]*M_PI/180) ) ) / (2.0*CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.radius_of_attachment[0]);
+		return ( ( distance[0]/(std::cos( (CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[0] - 90)*M_PI/180 ) ) ) - ( distance[2]/(std::cos( (CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[2] - 90)*M_PI/180 ) ) ) ) / (2.0*CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.radius_of_attachment[0]);
 	}
 
 	/**
@@ -199,7 +199,7 @@ private:
 	 * @return　ロボットの回転した角度
 	 */
 	float calc_angle(std::array<float,NUMBER_OF_ENCODER> distance) override {
-		return ( ( ( distance[0]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[0]*M_PI/180) ) / std::sin(180*M_PI/180) ) +  ( ( distance[1]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[1]*M_PI/180) ) / std::sin(300*M_PI/180) ) +  ( ( distance[2]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[2]*M_PI/180) ) / std::sin(60*M_PI/180) ) ) / (3.0 * CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.radius_of_attachment[0]);
+		return ( ( distance[0]/(std::cos( (CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[0] - 180)*M_PI/180 ) ) ) +  ( distance[1]/(std::cos( (CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[1] - 300)*M_PI/180 ) ) ) +  ( distance[2]/(std::cos( (CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[2] - 60)*M_PI/180 ) ) ) ) / (3.0 * CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.radius_of_attachment[0]);
 	}
 
 	/**
@@ -250,8 +250,8 @@ private:
 	 * @return　ロボットの回転した角度
 	 */
 	float calc_angle(std::array<float,NUMBER_OF_ENCODER> distance) override {
-		return (-distance[0]*std::cos(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[0]*M_PI/180) - distance[1]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[1]*M_PI/180)
-			  + distance[2]*std::cos(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[2]*M_PI/180) + distance[3]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[3]*M_PI/180))/(4.0*CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.radius_of_attachment[0]);
+		return( ( distance[0]/(std::cos( (CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[0] - 180)*M_PI/180 ) ) ) + ( distance[1]/(std::cos( (CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[1] - 270)*M_PI/180 ) ) )
+			  + ( distance[2]/(std::cos( (CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[2] - 360)*M_PI/180 ) ) ) + ( distance[3]/(std::cos( (CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[3] - 90)*M_PI/180  ) ) ))/(4.0*CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.radius_of_attachment[0]);
 	}
 
 	/**
@@ -306,7 +306,7 @@ private:
 	float calc_angle(std::array<float,NUMBER_OF_ENCODER> distance) override {
 		float calc_angle = 0;
 		for(int i = 0; i < (int)NUMBER_OF_ENCODER; i++){
-			calc_angle += ( ( distance[i]*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[i]*M_PI/180) ) / std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_TCP[i]*M_PI/180) )/(NUMBER_OF_ENCODER*CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.radius_of_attachment[i]);
+			calc_angle += ( distance[i]/(std::cos( (CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[i] - CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_TCP[i])*M_PI/180 ) ) )/(NUMBER_OF_ENCODER*CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.radius_of_attachment[i]);
 		}
 		return calc_angle;
 	}
