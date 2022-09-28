@@ -320,12 +320,12 @@ private:
 	Coordinate<float> convert_to_robot(std::array<float,NUMBER_OF_ENCODER> distance) override {
 		Coordinate<float> micro_robot_distance;
 		static std::array<float,NUMBER_OF_ENCODER> prev_distance = distance;
-		uint8_t xs_count = 0;
-		uint8_t ys_count = 0;
-		float micro_robot_distance_xm = 0;
-		float micro_robot_distance_ym = 0;
-		float micro_robot_distance_xs = 0;
-		float micro_robot_distance_ys = 0;
+		uint8_t xs_count = 0;					//!< 本来x軸に影響しないエンコーダーの数
+		uint8_t ys_count = 0;					//!< 本来y軸に影響しないエンコーダーの数
+		float micro_robot_distance_xm = 0;      //!< x軸のメインの値
+		float micro_robot_distance_ym = 0;      //!< y軸のメインの値
+		float micro_robot_distance_xs = 0;      //!< x軸のサブの値
+		float micro_robot_distance_ys = 0;      //!< y軸のサブの値
 		for(int i = 0; i < (int)NUMBER_OF_ENCODER; i++){
 			if(std::abs(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_TCP[i]) == 90 || std::abs(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_TCP[i]) == 270){
 				xs_count++;
