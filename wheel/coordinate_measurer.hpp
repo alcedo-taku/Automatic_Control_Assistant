@@ -160,8 +160,8 @@ private:
 	Coordinate<float> convert_to_robot(std::array<float,NUMBER_OF_ENCODER> distance) override {
 		Coordinate<float> micro_robot_distance;
 		static std::array<float,NUMBER_OF_ENCODER> prev_distance = distance;
-		micro_robot_distance.x = (distance[1]-prev_distance[1])*std::cos(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[1]*M_PI/180) + ( (distance[0]-prev_distance[0])*std::cos(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[0]*M_PI/180) + (distance[2]-prev_distance[2])*std::cos(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[2]*M_PI/180) ) / 2.0;
-		micro_robot_distance.y = (distance[1]-prev_distance[1])*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[1]*M_PI/180) + ( (distance[0]-prev_distance[0])*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[0]*M_PI/180) + (distance[2]-prev_distance[2])*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[2]*M_PI/180) ) / 2.0;;
+		micro_robot_distance.x = (distance[1]-prev_distance[1])/std::cos(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[1]*M_PI/180) + ( (distance[0]-prev_distance[0])/std::cos(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[0]*M_PI/180) + (distance[2]-prev_distance[2])/std::cos(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[2]*M_PI/180) ) / 2.0;
+		micro_robot_distance.y = (distance[1]-prev_distance[1])/std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[1]*M_PI/180) + ( (distance[0]-prev_distance[0])/std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[0]*M_PI/180) + (distance[2]-prev_distance[2])/std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[2]*M_PI/180) ) / 2.0;;
 		prev_distance = distance;
 		return micro_robot_distance;
 	}
@@ -211,8 +211,8 @@ private:
 	Coordinate<float> convert_to_robot(std::array<float,NUMBER_OF_ENCODER> distance) override {
 		Coordinate<float> micro_robot_distance;
 		static std::array<float,NUMBER_OF_ENCODER> prev_distance = distance;
-		micro_robot_distance.x = ( (distance[0]-prev_distance[0])*std::cos(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[0]*M_PI/180) + (distance[1]-prev_distance[1])*std::cos(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[1]*M_PI/180) + (distance[2]-prev_distance[2])*std::cos(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[2]*M_PI/180) ) / 3.0;
-		micro_robot_distance.y = ( (distance[0]-prev_distance[0])*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[0]*M_PI/180)) + ( (distance[1]-prev_distance[1])*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[1]*M_PI/180) + (distance[2]-prev_distance[2])*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[2]*M_PI/180) ) / 2.0;
+		micro_robot_distance.x = ( (distance[0]-prev_distance[0])/std::cos(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[0]*M_PI/180) + (distance[1]-prev_distance[1])/std::cos(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[1]*M_PI/180) + (distance[2]-prev_distance[2])/std::cos(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[2]*M_PI/180) ) / 3.0;
+		micro_robot_distance.y = ( (distance[0]-prev_distance[0])/std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[0]*M_PI/180)) + ( (distance[1]-prev_distance[1])/std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[1]*M_PI/180) + (distance[2]-prev_distance[2])/std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[2]*M_PI/180) ) / 2.0;
 		prev_distance = distance;
 		return micro_robot_distance;
 	}
@@ -263,10 +263,10 @@ private:
 	Coordinate<float> convert_to_robot(std::array<float,NUMBER_OF_ENCODER> distance) override {
 		Coordinate<float> micro_robot_distance;
 		static std::array<float,NUMBER_OF_ENCODER> prev_distance = distance;
-		micro_robot_distance.x = ( (distance[0]-prev_distance[0])*std::cos(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[0]*M_PI/180) + (distance[2]-prev_distance[2])*std::cos(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[2]*M_PI/180) )/2.0
-							   + ( (distance[1]-prev_distance[1])*std::cos(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[1]*M_PI/180) + (distance[3]-prev_distance[3])*std::cos(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[3]*M_PI/180) )/2.0;
-		micro_robot_distance.y = ( (distance[1]-prev_distance[1])*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[1]*M_PI/180) + (distance[3]-prev_distance[3])*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[3]*M_PI/180) )/2.0
-							   + ( (distance[0]-prev_distance[0])*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[0]*M_PI/180) + (distance[2]-prev_distance[2])*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[2]*M_PI/180) )/2.0;
+		micro_robot_distance.x = ( (distance[0]-prev_distance[0])/std::cos(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[0]*M_PI/180) + (distance[2]-prev_distance[2])/std::cos(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[2]*M_PI/180) )/2.0
+							   + ( (distance[1]-prev_distance[1])/std::cos(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[1]*M_PI/180) + (distance[3]-prev_distance[3])/std::cos(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[3]*M_PI/180) )/2.0;
+		micro_robot_distance.y = ( (distance[1]-prev_distance[1])/std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[1]*M_PI/180) + (distance[3]-prev_distance[3])/std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[3]*M_PI/180) )/2.0
+							   + ( (distance[0]-prev_distance[0])/std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[0]*M_PI/180) + (distance[2]-prev_distance[2])/std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[2]*M_PI/180) )/2.0;
 		prev_distance = distance;
 		return micro_robot_distance;
 	}
@@ -336,14 +336,14 @@ private:
 		}
 		for(int i = 0; i < (int)NUMBER_OF_ENCODER; i++){
 			if(std::abs(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_TCP[i]) == 90 || std::abs(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_TCP[i]) == 270){
-				micro_robot_distance_xs += (distance[i]-prev_distance[i])*std::cos(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[i]*M_PI/180) / xs_count;
+				micro_robot_distance_xs += (distance[i]-prev_distance[i])/std::cos(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[i]*M_PI/180) / xs_count;
 			}else{
-				micro_robot_distance_xm += (distance[i]-prev_distance[i])*std::cos(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[i]*M_PI/180) / (NUMBER_OF_ENCODER - xs_count);
+				micro_robot_distance_xm += (distance[i]-prev_distance[i])/std::cos(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[i]*M_PI/180) / (NUMBER_OF_ENCODER - xs_count);
 			}
 			if(std::abs(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_TCP[i]) == 360 || std::abs(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_TCP[i]) == 180){
-				micro_robot_distance_ys += (distance[i]-prev_distance[i])*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[i]*M_PI/180) / ys_count;
+				micro_robot_distance_ys += (distance[i]-prev_distance[i])/std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[i]*M_PI/180) / ys_count;
 			}else{
-				micro_robot_distance_ym += (distance[i]-prev_distance[i])*std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[i]*M_PI/180) / (NUMBER_OF_ENCODER - ys_count);
+				micro_robot_distance_ym += (distance[i]-prev_distance[i])/std::sin(CoordinateMeasurer<NUMBER_OF_ENCODER>::parameter.encoder_attachment_angle_true[i]*M_PI/180) / (NUMBER_OF_ENCODER - ys_count);
 			}
 		}
 
