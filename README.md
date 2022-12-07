@@ -1,4 +1,4 @@
-# Automatic_Control_Assistant - 3.5.1
+# Automatic_Control_Assistant - 3.5.2
 ```c++
 #include "Automatic_Control_Assistant.hpp"
 ```
